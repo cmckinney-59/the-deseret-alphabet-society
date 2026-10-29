@@ -1,0 +1,182 @@
+import { ALPHABETS_DATA } from "./ALPHABETS_DATA";
+import { getAurebeshFontTableFaces } from "./AurebeshData/AUREBESH_FONTS_DATA";
+import { BAYBAYIN_FONTS } from "./BaybayinData/BAYBAYIN_FONTS_DATA";
+import { DESERET_FONTS } from "./DeseretData/DESERET_FONTS_DATA";
+import { deseretUnicodeToLatin } from "./DeseretData/deseretLatinMap";
+
+export type FontTableRow = {
+  id: string;
+  name: string;
+  fontClass: string;
+  sample: string;
+  /** Path under `src/assets/fonts/`. */
+  downloadPath: string;
+  downloadName: string;
+  supportsUnicode: string;
+  license: string;
+  creator?: string;
+  sourceUrl?: string;
+};
+
+const FONT_ASSETS = import.meta.glob(
+  "../assets/fonts/**/*.{zip,ttf,otf,woff,woff2,TTF,OTF,WOFF,WOFF2}",
+  {
+    eager: true,
+    query: "?url",
+    import: "default",
+  },
+) as Record<string, string>;
+
+const PLQAD_FONT_ROWS: FontTableRow[] = [
+  {
+    id: "plqad",
+    name: "Plqad (pIqaD)",
+    fontClass: "plqad-font",
+    sample: "tlhIngan",
+    downloadPath: "klingon/klingon.zip",
+    downloadName: "klingon.zip",
+    supportsUnicode: "No",
+    license: "Personal",
+  },
+  {
+    id: "klinzhai",
+    name: "Plqad Klinzhai",
+    fontClass: "plqad-font-klinzhai",
+    sample: "Hello",
+    downloadPath: "klingon/Klinzhai.ttf",
+    downloadName: "Klinzhai.ttf",
+    supportsUnicode: "No",
+    license: "Personal",
+  },
+];
+
+const UNICODE_ALPHABETS = new Set([
+  "Buhid",
+  "Hanunoo",
+  "Ogham",
+  "Tagbanwa",
+]);
+
+const ALPHABET_LICENSE: Record<string, string> = {
+  Buhid: "Free",
+  Hanunoo: "Free",
+  Tagbanwa: "Free",
+};
+
+const ALPHABET_DOWNLOAD_PATH: Record<string, string> = {
+  Ancients: "ancients/ancients.zip",
+  Atlantean: "atlantean/atlantean-regular_xMmTX.zip",
+  Buhid: "buhid/Noto_Sans_Buhid.zip",
+  Cirth: "cirth/cirth-erebor.zip",
+  Gallifreyan: "gallifreyan/ws_simple_gallifreyan.zip",
+  Hanunoo: "hanunoo/Noto_Sans_Hanunoo.zip",
+  MarasEye: "maras-eye/maras-eye-font.zip",
+  Matoran: "matoran/matoran.zip",
+  Ogham: "ogham/Noto_Sans_Ogham.zip",
+  Steel: "steel/steel alphabet font - aligned.zip",
+  Tagbanwa: "tagbanwa/Noto_Sans_Tagbanwa.zip",
+  Tengwar: "tengwar/tengwar_quenya.zip",
+  Unown: "unown/unown.zip",
+};
+
+/** Resolve a path under `src/assets/fonts/` to a Vite asset URL. */
+export function getFontDownloadUrl(downloadPath: string): string | undefined {
+  const key = `../assets/fonts/${downloadPath}`;
+  return FONT_ASSETS[key];
+}
+
+/** Fonts available for the transliterator alphabet shown in the Fonts section. */
+export function getFontTableRows(alphabetName: string): FontTableRow[] {
+  if (alphabetName === "Baybayin") {
+    return BAYBAYIN_FONTS.map((font) => ({
+      id: font.id,
+      name: font.label,
+      fontClass: font.outputFontClass,
+      sample: font.sample,
+      downloadPath: font.downloadPath,
+      downloadName: font.downloadName,
+      supportsUnicode: font.supportsUnicodeLabel,
+      license: font.license,
+      creator: font.creator,
+      sourceUrl: font.sourceUrl,
+    }));
+  }
+
+  if (alphabetName === "Aurebesh") {
+    return getAurebeshFontTableFaces().map((font) => ({
+      id: font.id,
+      name: font.label,
+      fontClass: font.fontClass,
+      sample: font.sample,
+      downloadPath: font.downloadPath,
+      downloadName: font.downloadName,
+      supportsUnicode: "No",
+      license: font.license,
+      creator: font.creator,
+      sourceUrl: font.sourceUrl,
+    }));
+  }
+
+  if (alphabetName === "Deseret") {
+    const unicodeSample = "𐐔𐐯𐑅𐐲𐑉𐐯𐐻";
+    return DESERET_FONTS.map((font) => ({
+      id: font.id,
+      name: font.label,
+      fontClass: font.outputFontClass,
+      sample: font.supportsUnicode
+        ? unicodeSample
+        : deseretUnicodeToLatin(unicodeSample),
+      downloadPath: font.downloadPath,
+      downloadName: font.downloadName,
+      supportsUnicode: font.supportsUnicode ? "Yes" : "No",
+      license: font.license,
+      creator: font.creator,
+      sourceUrl: font.sourceUrl,
+    }));
+  }
+
+  if (alphabetName === "Plqad") {
+    return PLQAD_FONT_ROWS;
+  }
+
+  const entry = ALPHABETS_DATA.find(
+    (alphabet) => alphabet.name === alphabetName,
+  );
+  if (!entry) {
+    return [];
+  }
+
+  const downloadPath =
+    ALPHABET_DOWNLOAD_PATH[alphabetName] ??
+    `${alphabetName.toLowerCase()}/${entry.downloadName}`;
+
+  return [
+    {
+      id: entry.name.toLowerCase(),
+      name: entry.fontName,
+      fontClass: entry.outputFontClass,
+      sample: getDefaultSample(alphabetName),
+      downloadPath,
+      downloadName: entry.downloadName,
+      supportsUnicode: UNICODE_ALPHABETS.has(alphabetName) ? "Yes" : "No",
+      license: ALPHABET_LICENSE[alphabetName] ?? "Personal",
+    },
+  ];
+}
+
+function getDefaultSample(alphabetName: string): string {
+  switch (alphabetName) {
+    case "Buhid":
+      return "ᝋᝃᝒᝇ";
+    case "Hanunoo":
+      return "ᜋᜊᜓᜑᜌ";
+    case "Ogham":
+      return "Ogham";
+    case "Tagbanwa":
+      return "ᝫᝪᝳᝰᝮ";
+    case "Tengwar":
+      return "Tengwar";
+    default:
+      return alphabetName;
+  }
+}

@@ -1,0 +1,1370 @@
+/* One @font-face per family — required by CSS; paths are relative to this file. */
+
+@font-face {
+  font-family: "Ancients";
+  src: url("./assets/fonts/ancients/sg_anq.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atlantean";
+  src: url("./assets/fonts/atlantean/Atlantean Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Canon";
+  src: url("./assets/fonts/aurebesh/AurebeshAF-Canon.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Canon Tech";
+  src: url("./assets/fonts/aurebesh/AurebeshAF-CanonTech.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Legends";
+  src: url("./assets/fonts/aurebesh/AurebeshAF-Legends.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Legends Tech";
+  src: url("./assets/fonts/aurebesh/AurebeshAF-LegendsTech.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh";
+  src: url("./assets/fonts/aurebesh/PixelSagas/Aurebesh.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Cantina";
+  src: url("./assets/fonts/aurebesh/Cantina/AurebeshCantina.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AurebeshHand";
+  src: url("./assets/fonts/aurebesh/Hand/AurebeshHand-Regular.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh_Rodian";
+  src: url("./assets/fonts/aurebesh/Rodian/Aurebesh_Rodian.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh_Typewriter";
+  src: url("./assets/fonts/aurebesh/Typewriter/Aurebesh_Typewriter.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Docking Bay 94";
+  src: url("./assets/fonts/aurebesh/DockingBay94/DockingBay94.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh_OmaTres_beta";
+  src: url("./assets/fonts/aurebesh/OmaTres/Aurebesh_OmaTres.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Naboo AF Aurebesh";
+  src: url("./assets/fonts/aurebesh/NabooAF/NabooAFAurebesh-Regular.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FT Aurebesh";
+  src: url("./assets/fonts/aurebesh/FTAurebesh/FTAurebesh-Regular.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FT Aurebesh Bold";
+  src: url("./assets/fonts/aurebesh/FTAurebesh/FTAurebesh-Bold.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh_droid";
+  src: url("./assets/fonts/aurebesh/Droid/Aurebesh-Droid.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh_english";
+  src: url("./assets/fonts/aurebesh/English/Aurebesh-English.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Bloops AF";
+  src: url("./assets/fonts/aurebesh/Web/AurebeshBloopsAF.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Skyhook";
+  src: url("./assets/fonts/aurebesh/Web/Skyhook.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Droidobesh Depot";
+  src: url("./assets/fonts/aurebesh/Web/DroidobeshDepot-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Protobesh AF";
+  src: url("./assets/fonts/aurebesh/Web/ProtobeshAF.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outer Rim AF";
+  src: url("./assets/fonts/aurebesh/Web/OuterRimAF-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurek-Besh";
+  src: url("./assets/fonts/aurebesh/Web/Aurek-Besh.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurek-Besh Narrow";
+  src: url("./assets/fonts/aurebesh/Web/Aurek-Besh.Narrow.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurek-Besh Hand";
+  src: url("./assets/fonts/aurebesh/Web/Aurek-Besh.Hand.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh LU";
+  src: url("./assets/fonts/aurebesh/Web/AurebeshLU.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SG Aurebesh Heavy";
+  src: url("./assets/fonts/aurebesh/Web/SGAurebesh-Heavy.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nirvanabesh";
+  src: url("./assets/fonts/aurebesh/Web/Nirvanabesh.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maulobesh";
+  src: url("./assets/fonts/aurebesh/Web/Maulobesh.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Auraboo";
+  src: url("./assets/fonts/aurebesh/Web/Auraboo.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AURABESH";
+  src: url("./assets/fonts/aurebesh/Web/AURABESH.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AB Equinox";
+  src: url("./assets/fonts/aurebesh/Web/AB-Equinox.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aurebesh Old";
+  src: url("./assets/fonts/aurebesh/Web/aurebesh-old.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "New Aurabesh";
+  src: url("./assets/fonts/aurebesh/Web/newaure.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kyber Crystal Display Aurebesh";
+  src: url("./assets/fonts/aurebesh/Web/KyberCrystalDisplay-Aurebesh.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Life Day AF";
+  src: url("./assets/fonts/aurebesh/Web/LifeDayAFBETA.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Remember Kamino";
+  src: url("./assets/fonts/aurebesh/Web/RememberKamino.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Prime Jedi";
+  src: url("./assets/fonts/aurebesh/Web/PrimeJedi.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Imperial Broadcast 87";
+  src: url("./assets/fonts/aurebesh/Web/ImperialBroadcast87.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sith AF";
+  src: url("./assets/fonts/aurebesh/Web/SithAF-BETA.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Umbara AF";
+  src: url("./assets/fonts/aurebesh/Web/UmbaraAF.woff2") format("woff2");
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "Baybayin";
+  src: url("./assets/fonts/baybayin/TagDoc93.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Lopez";
+  src: url("./assets/fonts/baybayin/PaulMorrow/BayLopez.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bikol Mintz";
+  src: url("./assets/fonts/baybayin/PaulMorrow/BikMintz.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bisaya Hervas";
+  src: url("./assets/fonts/baybayin/PaulMorrow/BisHerv.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bagwis Baybayin";
+  src: url("./assets/fonts/baybayin/BagwisBaybayinFontRegular-ZV3MK.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Stylized";
+  src: url("./assets/fonts/baybayin/TagalogStylized.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Baybayin";
+  src: url("./assets/fonts/baybayin/NotoSansTagalog-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif Baybayin";
+  src: url("./assets/fonts/baybayin/NotoSerifTagalog/NotoSerifTagalog-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenBaybayin";
+  src: url("./assets/fonts/baybayin/OpenBaybayin/OpenBaybayin.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Robotika";
+  src: url("./assets/fonts/baybayin/BaybayinRobotika.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Chochin";
+  src: url("./assets/fonts/baybayin/BAYBAYIN CHOCHIN FREE_09242018.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Tayo Handwriting";
+  src: url("./assets/fonts/baybayin/Tayo/BaybayinBTB30.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Malibata Neue";
+  src: url("./assets/fonts/baybayin/Malibata-Neue.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Matatas One";
+  src: url("./assets/fonts/baybayin/matatas_one.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Buhid";
+  src: url("./assets/fonts/buhid/Noto_Sans_Buhid/NotoSansBuhid-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cirth";
+  src: url("./assets/fonts/cirth/Erebor.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Deseret";
+  src: url("./assets/fonts/deseret/noto-sans-deseret/deseret/ttf/noto-sans-deseret-deseret-400-normal.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Analecta";
+  src: url("./assets/fonts/deseret/Analecta/Analecta.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Code2001";
+  src: url("./assets/fonts/deseret/Code2001/CODE2001.TTF") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MPH 2B Damase";
+  src: url("./assets/fonts/deseret/MPH2BDamase/damase_v.2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "desalph";
+  src: url("./assets/fonts/deseret/Desalph/desalph.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IDC Xylocopa";
+  src: url("./assets/fonts/deseret/Xylocopa/IDCXylocopa.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IDC Nomada Gothic";
+  src: url("./assets/fonts/deseret/Nomada/IDCNomada.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Unifont Upper";
+  src: url("./assets/fonts/deseret/UnifontUpper/unifont_upper-18.0.01.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AdamicBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Serif/AdamicBee3/_AdamicBee3_0.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TimesBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Serif/TimesBee2/TimesBee2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TumbleBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Serif/TumbleBee2/_TumbleBee2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "QueenBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Serif/QueenBee2/_QueenBee_2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "QueenBee Star";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Serif/QueenBeeStar2/_QueenBee Star 2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DeseretBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/DeseretBee2/_DeseretBee2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HoneyBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/HoneyBee2/_HoneyBee2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ReaderBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/ReaderBee2/_ReaderBee2_0.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ZarahemlaBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/ZarahelmlaBee2/_ZarahemlaBee2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Blunt";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeBlunt/_TuBee Blunt kern 2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Blunt Hollow Light";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeBlunt/_TuBee Blunt Hollow Light2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Blunt Hollow Medium";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeBlunt/_TuBee Blunt Hollow Medium2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Blunt Shadow";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeBlunt/_TuBee Blunt Shadow2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Round";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeRound/_TuBee Round3_0.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Round Hollow Light";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeRound/_TuBee Round Hollow Light2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Round Hollow Medium";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeRound/_TuBee Round Hollow Medium2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TuBee Round Shadow";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/SanSerif/TuBeeRound/_TuBee Round Shadow2.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret HuneyBee";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/Huneybee.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bee Skep Serif";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/beeskeps.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Legacy";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/DESERET.TTF")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Legacy Alt";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/Deseret.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Legacy Underscore";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/Deseret_.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DeseretBee Legacy";
+  src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/_DeseretBee.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mellifera Deseret Master";
+  src: url("./assets/fonts/deseret/Mellifera/MelliferaDeseretMaster.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gallifreyan";
+  src: url("./assets/fonts/gallifreyan/ws_simple_gallifreyan.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maras Eye";
+  src: url("./assets/fonts/maras-eye/MarasEye-EOyl.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hanunoo";
+  src: url("./assets/fonts/hanunoo/Noto_Sans_Hanunoo/NotoSansHanunoo-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Matoran";
+  src: url("./assets/fonts/matoran/Matoran.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ogham";
+  src: url("./assets/fonts/ogham/NotoSansOgham-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plqad";
+  src: url("./assets/fonts/klingon/klingon font.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plqad Klinzhai";
+  src: url("./assets/fonts/klingon/Klinzhai.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plqad Mandel";
+  src: url("./assets/fonts/klingon/Klingon-pIqaD-Mandel.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Steel";
+  src: url("./assets/fonts/steel/steelAlphabet - Aligned.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tagbanwa";
+  src: url("./assets/fonts/tagbanwa/Noto_Sans_Tagbanwa/NotoSansTagbanwa-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tengwar";
+  src: url("./assets/fonts/tengwar/QUENYA.TTF") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Unown";
+  src: url("./assets/fonts/unown/Unown.ttf") format("truetype");
+  font-display: swap;
+}
+
+
+/* Additional Baybayin faces */
+
+@font-face {
+  font-family: "Baybayin Neue";
+  src: url("./assets/fonts/baybayin/BaybayinNeue/BaybayinNeue-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hiraya_edl_b18x";
+  src: url("./assets/fonts/baybayin/Hiraya/Hiraya_Baybayin.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mahiwaga_baybayin_font";
+  src: url("./assets/fonts/baybayin/Mahiwaga/Mahiwaga_Baybayin_Font.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Rounded";
+  src: url("./assets/fonts/baybayin/Rounded/BaybayinRoundedRegular-3VXy.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kasarinlan Baybayin Font";
+  src: url("./assets/fonts/baybayin/Kasarinlan/KasarinlanBaybayinFont-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TAAL";
+  src: url("./assets/fonts/baybayin/TAAL/TAAL.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tagalogika";
+  src: url("./assets/fonts/baybayin/Tagalogika/Tagalogika.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Doctrina";
+  src: url("./assets/fonts/baybayin/JohnrelLor/BaybayinDoctrina.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BaybayinDoctrinaClear";
+  src: url("./assets/fonts/baybayin/JohnrelLor/BaybayinDoctrinaClear.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tawbid Pilipinas";
+  src: url("./assets/fonts/baybayin/Tawbid/TawbidPilipinas21R.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Alemania";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Alemania.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Alpabeta";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Alphabeta.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Bern";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Bern.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Block";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Bloc.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Bolats";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Bolats.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Brush 1";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Brush.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Club";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Club.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Damo";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Damo.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Divine";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Divine.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Doctrina";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Doctrina.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Gana";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Gana.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Impen";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Impen.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Jepoy";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Jepoy.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Kana";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Kana.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Kufic";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Kufic.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Laso";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Laso.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Leets";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Leets.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern LoCaNo";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-LopezModern.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern McKudlit";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-McKudlit.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Mindoro";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Mindoro.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Script";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Modern.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Mono";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Mono.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Print";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Print.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Ringo";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Ringo.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Round";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Round.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Sinta";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Sinta.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Sulat";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Sulat.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Tanso";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Tanso.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Tulsok";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Tulsok.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Varsitita";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Varsitita.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baybayin Modern Varsitito";
+  src: url("./assets/fonts/baybayin/Nordenx/BaybayinModern-Varsitito.ttf") format("truetype");
+  font-display: swap;
+}
+
+.ancients-font {
+  font-family: "Ancients", sans-serif;
+}
+.atlantean-font {
+  font-family: "Atlantean", sans-serif;
+}
+.aurebesh-font-canon {
+  font-family: "Aurebesh Canon", sans-serif;
+}
+.aurebesh-font-canon-tech {
+  font-family: "Aurebesh Canon Tech", sans-serif;
+}
+.aurebesh-font-legends {
+  font-family: "Aurebesh Legends", sans-serif;
+}
+.aurebesh-font-legends-tech {
+  font-family: "Aurebesh Legends Tech", sans-serif;
+}
+.aurebesh-font-pixel-sagas {
+  font-family: "Aurebesh", sans-serif;
+}
+.aurebesh-font-cantina {
+  font-family: "Aurebesh Cantina", sans-serif;
+}
+.aurebesh-font-hand {
+  font-family: "AurebeshHand", cursive;
+}
+.aurebesh-font-rodian {
+  font-family: "Aurebesh_Rodian", sans-serif;
+}
+.aurebesh-font-typewriter {
+  font-family: "Aurebesh_Typewriter", monospace;
+}
+.aurebesh-font-docking-bay-94 {
+  font-family: "Docking Bay 94", sans-serif;
+}
+.aurebesh-font-oma-tres {
+  font-family: "Aurebesh_OmaTres_beta", sans-serif;
+}
+.aurebesh-font-naboo-af {
+  font-family: "Naboo AF Aurebesh", sans-serif;
+}
+.aurebesh-font-ft-regular {
+  font-family: "FT Aurebesh", sans-serif;
+}
+.aurebesh-font-ft-bold {
+  font-family: "FT Aurebesh Bold", sans-serif;
+}
+.aurebesh-font-droid {
+  font-family: "Aurebesh_droid", sans-serif;
+}
+.aurebesh-font-english {
+  font-family: "Aurebesh_english", sans-serif;
+}
+.aurebesh-font-bloops-af {
+  font-family: "Aurebesh Bloops AF", sans-serif;
+}
+.aurebesh-font-skyhook {
+  font-family: "Skyhook", sans-serif;
+}
+.aurebesh-font-droidobesh-depot {
+  font-family: "Droidobesh Depot", sans-serif;
+}
+.aurebesh-font-protobesh-af {
+  font-family: "Protobesh AF", sans-serif;
+}
+.aurebesh-font-outer-rim-af {
+  font-family: "Outer Rim AF", sans-serif;
+}
+.aurebesh-font-aurek-besh {
+  font-family: "Aurek-Besh", sans-serif;
+}
+.aurebesh-font-aurek-besh-narrow {
+  font-family: "Aurek-Besh Narrow", sans-serif;
+}
+.aurebesh-font-aurek-besh-hand {
+  font-family: "Aurek-Besh Hand", sans-serif;
+}
+.aurebesh-font-aurebesh-lu {
+  font-family: "Aurebesh LU", sans-serif;
+}
+.aurebesh-font-sg-aurebesh-heavy {
+  font-family: "SG Aurebesh Heavy", sans-serif;
+}
+.aurebesh-font-nirvanabesh {
+  font-family: "Nirvanabesh", sans-serif;
+}
+.aurebesh-font-maulobesh {
+  font-family: "Maulobesh", sans-serif;
+}
+.aurebesh-font-auraboo {
+  font-family: "Auraboo", sans-serif;
+}
+.aurebesh-font-aurabesh {
+  font-family: "AURABESH", sans-serif;
+}
+.aurebesh-font-ab-equinox {
+  font-family: "AB Equinox", sans-serif;
+}
+.aurebesh-font-aurebesh-old {
+  font-family: "Aurebesh Old", sans-serif;
+}
+.aurebesh-font-new-aurabesh {
+  font-family: "New Aurabesh", sans-serif;
+}
+.aurebesh-font-kyber-crystal-aurebesh {
+  font-family: "Kyber Crystal Display Aurebesh", sans-serif;
+}
+.aurebesh-font-life-day-af {
+  font-family: "Life Day AF", sans-serif;
+}
+.aurebesh-font-remember-kamino {
+  font-family: "Remember Kamino", sans-serif;
+}
+.aurebesh-font-prime-jedi {
+  font-family: "Prime Jedi", sans-serif;
+}
+.aurebesh-font-imperial-broadcast-87 {
+  font-family: "Imperial Broadcast 87", sans-serif;
+}
+.aurebesh-font-sith-af {
+  font-family: "Sith AF", sans-serif;
+}
+.aurebesh-font-umbara-af {
+  font-family: "Umbara AF", sans-serif;
+}
+
+.baybayin-font {
+  font-family: "Baybayin", sans-serif;
+}
+.baybayin-lopez-font {
+  font-family: "Baybayin Lopez", sans-serif;
+}
+.bikol-mintz-font {
+  font-family: "Bikol Mintz", sans-serif;
+}
+.bisaya-hervas-font {
+  font-family: "Bisaya Hervas", sans-serif;
+}
+.bagwis-font {
+  font-family: "Bagwis Baybayin", "Baybayin", sans-serif;
+}
+.baybayin-stylized-font {
+  font-family: "Baybayin Stylized", sans-serif;
+}
+.noto-sans-baybayin {
+  font-family: "Noto Sans Baybayin", sans-serif;
+}
+.noto-serif-baybayin {
+  font-family: "Noto Serif Baybayin", serif;
+}
+.open-baybayin-font {
+  font-family: "OpenBaybayin", sans-serif;
+}
+.baybayin-robotika-font {
+  font-family: "Baybayin Robotika", sans-serif;
+}
+.baybayin-chochin-font {
+  font-family: "Baybayin Chochin", sans-serif;
+}
+.baybayin-tayo-font {
+  font-family: "Baybayin Tayo Handwriting", cursive;
+}
+.malibata-neue-font {
+  font-family: "Malibata Neue", sans-serif;
+}
+.matatas-one-font {
+  font-family: "Matatas One", sans-serif;
+}
+.baybayin-neue-font {
+  font-family: "Baybayin Neue", sans-serif;
+}
+.hiraya-baybayin-font {
+  font-family: "Hiraya_edl_b18x", sans-serif;
+}
+.mahiwaga-baybayin-font {
+  font-family: "Mahiwaga_baybayin_font", sans-serif;
+}
+.baybayin-rounded-font {
+  font-family: "Baybayin Rounded", sans-serif;
+}
+.kasarinlan-baybayin-font {
+  font-family: "Kasarinlan Baybayin Font", sans-serif;
+}
+.taal-baybayin-font {
+  font-family: "TAAL", sans-serif;
+}
+.tagalogika-font {
+  font-family: "Tagalogika", sans-serif;
+}
+.baybayin-doctrina-lor-font {
+  font-family: "Baybayin Doctrina", sans-serif;
+}
+.baybayin-doctrina-clear-font {
+  font-family: "BaybayinDoctrinaClear", sans-serif;
+}
+.tawbid-pilipinas-font {
+  font-family: "Tawbid Pilipinas", sans-serif;
+}
+.baybayin-font-nordenx-alemania {
+  font-family: "Baybayin Modern Alemania", sans-serif;
+}
+.baybayin-font-nordenx-alphabeta {
+  font-family: "Baybayin Modern Alpabeta", sans-serif;
+}
+.baybayin-font-nordenx-bern {
+  font-family: "Baybayin Modern Bern", sans-serif;
+}
+.baybayin-font-nordenx-bloc {
+  font-family: "Baybayin Modern Block", sans-serif;
+}
+.baybayin-font-nordenx-bolats {
+  font-family: "Baybayin Modern Bolats", sans-serif;
+}
+.baybayin-font-nordenx-brush {
+  font-family: "Baybayin Modern Brush 1", sans-serif;
+}
+.baybayin-font-nordenx-club {
+  font-family: "Baybayin Modern Club", sans-serif;
+}
+.baybayin-font-nordenx-damo {
+  font-family: "Baybayin Modern Damo", sans-serif;
+}
+.baybayin-font-nordenx-divine {
+  font-family: "Baybayin Modern Divine", sans-serif;
+}
+.baybayin-font-nordenx-doctrina {
+  font-family: "Baybayin Modern Doctrina", sans-serif;
+}
+.baybayin-font-nordenx-gana {
+  font-family: "Baybayin Modern Gana", sans-serif;
+}
+.baybayin-font-nordenx-impen {
+  font-family: "Baybayin Modern Impen", sans-serif;
+}
+.baybayin-font-nordenx-jepoy {
+  font-family: "Baybayin Modern Jepoy", sans-serif;
+}
+.baybayin-font-nordenx-kana {
+  font-family: "Baybayin Modern Kana", sans-serif;
+}
+.baybayin-font-nordenx-kufic {
+  font-family: "Baybayin Modern Kufic", sans-serif;
+}
+.baybayin-font-nordenx-laso {
+  font-family: "Baybayin Modern Laso", sans-serif;
+}
+.baybayin-font-nordenx-leets {
+  font-family: "Baybayin Modern Leets", sans-serif;
+}
+.baybayin-font-nordenx-lopezmodern {
+  font-family: "Baybayin Modern LoCaNo", sans-serif;
+}
+.baybayin-font-nordenx-mckudlit {
+  font-family: "Baybayin Modern McKudlit", sans-serif;
+}
+.baybayin-font-nordenx-mindoro {
+  font-family: "Baybayin Modern Mindoro", sans-serif;
+}
+.baybayin-font-nordenx-modern {
+  font-family: "Baybayin Modern Script", sans-serif;
+}
+.baybayin-font-nordenx-mono {
+  font-family: "Baybayin Modern Mono", sans-serif;
+}
+.baybayin-font-nordenx-print {
+  font-family: "Baybayin Modern Print", sans-serif;
+}
+.baybayin-font-nordenx-ringo {
+  font-family: "Baybayin Modern Ringo", sans-serif;
+}
+.baybayin-font-nordenx-round {
+  font-family: "Baybayin Modern Round", sans-serif;
+}
+.baybayin-font-nordenx-sinta {
+  font-family: "Baybayin Modern Sinta", sans-serif;
+}
+.baybayin-font-nordenx-sulat {
+  font-family: "Baybayin Modern Sulat", sans-serif;
+}
+.baybayin-font-nordenx-tanso {
+  font-family: "Baybayin Modern Tanso", sans-serif;
+}
+.baybayin-font-nordenx-tulsok {
+  font-family: "Baybayin Modern Tulsok", sans-serif;
+}
+.baybayin-font-nordenx-varsitita {
+  font-family: "Baybayin Modern Varsitita", sans-serif;
+}
+.baybayin-font-nordenx-varsitito {
+  font-family: "Baybayin Modern Varsitito", sans-serif;
+}
+
+.buhid-font {
+  font-family: "Buhid", sans-serif;
+}
+.cirth-font {
+  font-family: "Cirth", sans-serif;
+}
+.deseret-font,
+.deseret-font-noto-sans {
+  font-family: "Noto Sans Deseret", sans-serif;
+}
+.deseret-font-analecta {
+  font-family: "Analecta", serif;
+}
+.deseret-font-code2001 {
+  font-family: "Code2001", sans-serif;
+}
+.deseret-font-mph-2b-damase {
+  font-family: "MPH 2B Damase", sans-serif;
+}
+.deseret-font-desalph {
+  font-family: "desalph", serif;
+}
+.deseret-font-xylocopa {
+  font-family: "IDC Xylocopa", monospace;
+}
+.deseret-font-nomada {
+  /* Capitals only (40 glyphs); Noto fills lowercase Deseret. */
+  font-family: "IDC Nomada Gothic", "Noto Sans Deseret", sans-serif;
+}
+.deseret-font-unifont-upper {
+  font-family: "Unifont Upper", monospace;
+}
+.deseret-font-adamic-bee {
+  font-family: "AdamicBee", serif;
+}
+.deseret-font-times-bee {
+  font-family: "TimesBee", serif;
+}
+.deseret-font-tumble-bee {
+  font-family: "TumbleBee", serif;
+}
+.deseret-font-queen-bee {
+  font-family: "QueenBee", serif;
+}
+.deseret-font-queen-bee-star {
+  font-family: "QueenBee Star", serif;
+}
+.deseret-font-deseret-bee {
+  font-family: "DeseretBee", sans-serif;
+}
+.deseret-font-honey-bee {
+  font-family: "HoneyBee", sans-serif;
+}
+.deseret-font-reader-bee {
+  font-family: "ReaderBee", sans-serif;
+}
+.deseret-font-zarahemla-bee {
+  font-family: "ZarahemlaBee", sans-serif;
+}
+.deseret-font-tubee-blunt {
+  font-family: "TuBee Blunt", sans-serif;
+}
+.deseret-font-tubee-blunt-hollow-light {
+  font-family: "TuBee Blunt Hollow Light", sans-serif;
+}
+.deseret-font-tubee-blunt-hollow-medium {
+  font-family: "TuBee Blunt Hollow Medium", sans-serif;
+}
+.deseret-font-tubee-blunt-shadow {
+  font-family: "TuBee Blunt Shadow", sans-serif;
+}
+.deseret-font-tubee-round {
+  font-family: "TuBee Round", sans-serif;
+}
+.deseret-font-tubee-round-hollow-light {
+  font-family: "TuBee Round Hollow Light", sans-serif;
+}
+.deseret-font-tubee-round-hollow-medium {
+  font-family: "TuBee Round Hollow Medium", sans-serif;
+}
+.deseret-font-tubee-round-shadow {
+  font-family: "TuBee Round Shadow", sans-serif;
+}
+.deseret-font-mellifera {
+  font-family: "Mellifera Deseret Master", serif;
+}
+.deseret-font-huneybee {
+  font-family: "Deseret HuneyBee", sans-serif;
+}
+.deseret-font-bee-skep {
+  font-family: "Bee Skep Serif", serif;
+}
+.deseret-font-legacy {
+  font-family: "Deseret Legacy", sans-serif;
+}
+.deseret-font-legacy-alt {
+  font-family: "Deseret Legacy Alt", sans-serif;
+}
+.deseret-font-legacy-underscore {
+  font-family: "Deseret Legacy Underscore", sans-serif;
+}
+.deseret-font-deseret-bee-legacy {
+  font-family: "DeseretBee Legacy", sans-serif;
+}
+.gallifreyan-font {
+  font-family: "Gallifreyan", sans-serif;
+}
+.hanunoo-font {
+  font-family: "Hanunoo", sans-serif;
+}
+.maras-eye-font {
+  font-family: "Maras Eye", sans-serif;
+}
+.matoran-font {
+  font-family: "Matoran", sans-serif;
+}
+.ogham-font {
+  font-family: "Ogham", sans-serif;
+}
+.plqad-font {
+  font-family: "Plqad", sans-serif;
+}
+.plqad-font-klinzhai {
+  font-family: "Plqad Klinzhai", sans-serif;
+}
+.plqad-font-mandel {
+  font-family: "Plqad Mandel", sans-serif;
+}
+.steel-font {
+  font-family: "Steel", sans-serif;
+}
+.tagbanwa-font {
+  font-family: "Tagbanwa", sans-serif;
+}
+.tengwar-font {
+  font-family: "Tengwar", sans-serif;
+}
+.unown-font {
+  font-family: "Unown", sans-serif;
+}
+
+.aurebesh-font-canon,
+.aurebesh-font-canon-tech,
+.aurebesh-font-legends,
+.aurebesh-font-legends-tech,
+.aurebesh-font-ft-regular,
+.aurebesh-font-ft-bold {
+  font-feature-settings:
+    "calt" 1,
+    "liga" 1,
+    "clig" 1,
+    "dlig" 1;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  -webkit-font-feature-settings:
+    "calt" 1,
+    "liga" 1,
+    "clig" 1,
+    "dlig" 1;
+  -moz-font-feature-settings:
+    "calt" 1,
+    "liga" 1,
+    "clig" 1,
+    "dlig" 1;
+}

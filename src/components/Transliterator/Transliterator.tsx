@@ -1,0 +1,766 @@
+import { useState, useEffect, useRef } from "react";
+
+import SaveButtonContainter from "../Buttons/SaveButtons/SaveButtonsContainer.tsx";
+import TransliteratorContainer from "../TransliteratorContainer/TransliteratorContainer.tsx";
+import WordReviewDialog from "../Dialog/WordReviewDialog.tsx";
+import WordFileTransliterator from "./WordFileTransliterator.tsx";
+import { useWordsDictionary } from "../../contexts/WordsDictionaryContext.tsx";
+import { useExperimentalFeatures } from "../../contexts/ExperimentalFeaturesContext";
+import { useAlphabet } from "../../contexts/AlphabetContext";
+import { ALPHABETS_DATA } from "../../data/ALPHABETS_DATA";
+import { processPlqadTextKlinzhai } from "../../utils/TextProcessors/PlqadTextProcessor";
+import CheckBoxContainer, {
+  hasTransliteratorSettings,
+} from "../CheckBoxContainer/CheckBoxContainer.tsx";
+import processBaybayinText from "../../utils/TextProcessors/BaybayinTextProcessor.ts";
+import processDeseretText from "../../utils/TextProcessors/DeseretTextProcessor.ts";
+import type { DeseretMode } from "../../utils/TextProcessors/DeseretTextProcessor.ts";
+import {
+  DEFAULT_AUREBESH_FONT_ID,
+  getAurebeshFontById,
+  type AurebeshFontId,
+} from "../../data/AurebeshData/AUREBESH_FONTS_DATA";
+import {
+  DEFAULT_BAYBAYIN_FONT_ID,
+  baybayinUsesUnicodeOutput,
+  getBaybayinFontById,
+  type BaybayinFontId,
+} from "../../data/BaybayinData/BAYBAYIN_FONTS_DATA";
+import {
+  DEFAULT_DESERET_FONT_ID,
+  deseretFontSupportsUnicode,
+  getDeseretFontById,
+  type DeseretFontId,
+} from "../../data/DeseretData/DESERET_FONTS_DATA";
+import { phoneticFromDeseretText } from "../../data/DeseretData/deseretPhoneticMap";
+import {
+  deseretLatinToUnicode,
+  deseretUnicodeToLatin,
+} from "../../data/DeseretData/deseretLatinMap";
+import {
+  DEFAULT_TRANSLITERATOR_FONT_SIZE,
+  type TransliteratorFontSize,
+} from "../../data/transliteratorFontSize";
+import {
+  mergeBaybayinKudlit,
+  phoneticFromBaybayinText,
+} from "../../data/BaybayinData/baybayinPhoneticMap";
+
+import Keyboard from "../Keyboard/Keyboard.tsx";
+import {
+  isExperimentalAlphabet,
+  resolveAlphabetKeyboard,
+} from "../../data/alphabetKeyboardRegistry";
+import { AUREBESH_DIGRAPHS } from "../../data/AurebeshData/aurebeshKeyboardLayout";
+import { phoneticFromTagbanwaText } from "../../data/TagbanwaData/tagbanwaKeyboardLayout";
+import { phoneticFromBuhidText } from "../../data/BuhidData/buhidKeyboardLayout";
+import { phoneticFromHanunooText } from "../../data/HanunooData/hanunooKeyboardLayout";
+import { phoneticFromOghamText } from "../../data/OghamData/oghamKeyboardLayout";
+import { PLQAD_DIGRAPHS } from "../../data/PlqadData/plqadKeyboardLayout";
+import { isLatinSlotKeyboardAlphabet } from "../../data/shared/latinSlotKeyboardLayout";
+
+const processors: Record<string, (word: string) => string | Promise<string>> =
+  Object.fromEntries(ALPHABETS_DATA.map((a) => [a.name, a.processor]));
+
+/** Length of a trailing digraph key unit, or 0 if none. */
+function matchKeyboardDigraph(
+  before: string,
+  alphabet: string,
+  useKlinzhai: boolean,
+): number {
+  if (alphabet === "Aurebesh") {
+    for (const digraph of AUREBESH_DIGRAPHS) {
+      if (before.toLowerCase().endsWith(digraph)) return digraph.length;
+    }
+  }
+  if (alphabet === "Plqad" && !useKlinzhai) {
+    // Prefer longer digraphs first (tlh before single letters).
+    const sorted = [...PLQAD_DIGRAPHS].sort((a, b) => b.length - a.length);
+    for (const digraph of sorted) {
+      if (before.endsWith(digraph) || before.toLowerCase().endsWith(digraph.toLowerCase())) {
+        return digraph.length;
+      }
+    }
+  }
+  return 0;
+}
+
+interface TransliteratorProps {
+  currentAlphabet: string;
+}
+
+export default function Transliterator({
+  currentAlphabet,
+}: TransliteratorProps) {
+  const { currentFontName } = useAlphabet();
+  const [text, setText] = useState<string>("");
+  const [transliteratedText, setTransliteratedText] = useState<string>("");
+  const {
+    wordsDictionary,
+    setWordsDictionary,
+    clearWordsDictionary,
+    wordContainsBorrowedSound,
+  } = useWordsDictionary();
+  const { showExperimentalFeatures } = useExperimentalFeatures();
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [textContainsBorrowedWords, setTextContainsBorrowedWords] =
+    useState<boolean>(false);
+  const [useCombinedCharacters, setUseCombinedCharacters] =
+    useState<boolean>(false);
+  const [useTechNumbers, setUseTechNumbers] = useState<boolean>(false);
+  const [useKlinzhai, setUseKlinzhai] = useState<boolean>(false);
+  const [deseretMode, setDeseretMode] = useState<DeseretMode>("classic");
+  /** Include Long Aw 𐐃 (caught/awe). Off merges into 𐐂. */
+  const [includeDeseretLongAw, setIncludeDeseretLongAw] = useState(true);
+  /** Include Short O 𐐉 (British hot). Off uses 𐐂 instead. */
+  const [includeDeseretShortO, setIncludeDeseretShortO] = useState(false);
+  const [selectedAurebeshFont, setSelectedAurebeshFont] =
+    useState<AurebeshFontId>(DEFAULT_AUREBESH_FONT_ID);
+  const [selectedBaybayinFont, setSelectedBaybayinFont] =
+    useState<BaybayinFontId>(DEFAULT_BAYBAYIN_FONT_ID);
+  const [selectedDeseretFont, setSelectedDeseretFont] =
+    useState<DeseretFontId>(DEFAULT_DESERET_FONT_ID);
+  const [fontSize, setFontSize] = useState<TransliteratorFontSize>(
+    DEFAULT_TRANSLITERATOR_FONT_SIZE,
+  );
+  const [useXVowelKiller, setUseXVowelKiller] = useState<boolean>(false);
+  const [useHollowKudlits, setUseHollowKudlits] = useState<boolean>(true);
+  const [useUnicode, setUseUnicode] = useState<boolean>(false);
+  const [doktrinaLatinInput, setDoktrinaLatinInput] = useState<boolean>(false);
+  const [phoneticMode, setPhoneticMode] = useState<boolean>(false);
+  const [useEnglishPronunciation, setUseEnglishPronunciation] =
+    useState<boolean>(true);
+  const [useSpanishPronunciation, setUseSpanishPronunciation] =
+    useState<boolean>(true);
+  const [phoneticPriority, setPhoneticPriority] = useState<"english" | "spanish">(
+    "english",
+  );
+  const [useSingleLineInput, setUseSingleLineInput] = useState<boolean>(true);
+  const [outputOnlyMode, setOutputOnlyMode] = useState<boolean>(false);
+  const [activeField, setActiveField] = useState<"input" | "output">("input");
+  const [inputCursor, setInputCursor] = useState(0);
+  const [outputCursor, setOutputCursor] = useState(0);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const outputRef = useRef<HTMLTextAreaElement | null>(null);
+  const isBaybayin = currentAlphabet === "Baybayin";
+  const isBuhid = currentAlphabet === "Buhid";
+  const isHanunoo = currentAlphabet === "Hanunoo";
+  const isTagbanwa = currentAlphabet === "Tagbanwa";
+  const isPlqad = currentAlphabet === "Plqad";
+  const isDeseret = currentAlphabet === "Deseret";
+  const isAurebesh = currentAlphabet === "Aurebesh";
+  const isOgham = currentAlphabet === "Ogham";
+  const usesSyllabicKeyboard =
+    isBaybayin || isBuhid || isHanunoo || isTagbanwa;
+  const usesLatinSlotKeyboard =
+    isAurebesh || isPlqad || isLatinSlotKeyboardAlphabet(currentAlphabet);
+  const baybayinUnicodeOutput =
+    doktrinaLatinInput ||
+    baybayinUsesUnicodeOutput(selectedBaybayinFont, useUnicode);
+  const deseretModernActive =
+    showExperimentalFeatures && deseretMode === "modern";
+  // Modern always includes 𐐃 and 𐐉; classic uses the settings toggles.
+  const effectiveIncludeDeseretLongAw =
+    deseretModernActive || includeDeseretLongAw;
+  const effectiveIncludeDeseretShortO =
+    deseretModernActive || includeDeseretShortO;
+  const keyboardConfig = resolveAlphabetKeyboard(currentAlphabet, {
+    useCombinedCharacters,
+    useTechNumbers,
+    useKlinzhai,
+    selectedAurebeshFont,
+    selectedBaybayinFont,
+    selectedDeseretFont,
+    useHollowKudlits,
+    useXVowelKiller,
+    deseretModern: deseretModernActive,
+    includeDeseretLongAw: effectiveIncludeDeseretLongAw,
+    includeDeseretShortO: effectiveIncludeDeseretShortO,
+  });
+  // Stable alphabets always show the keyboard; experimental ones need the flag.
+  const showOnScreenKeyboard =
+    !!keyboardConfig &&
+    (!isExperimentalAlphabet(currentAlphabet) || showExperimentalFeatures);
+
+  useEffect(() => {
+    if (!showOnScreenKeyboard && outputOnlyMode) {
+      setOutputOnlyMode(false);
+    }
+  }, [showOnScreenKeyboard, outputOnlyMode]);
+
+  useEffect(() => {
+    if (outputOnlyMode) {
+      setActiveField("output");
+    }
+  }, [outputOnlyMode]);
+
+  useEffect(() => {
+    if (textareaRef.current && outputRef.current) {
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      if (outputOnlyMode) {
+        textareaRef.current.style.height = "";
+        outputRef.current.style.height = "";
+        return;
+      }
+      if (isMobile && useSingleLineInput) {
+        textareaRef.current.style.height = "";
+        outputRef.current.style.height = "";
+        return;
+      }
+
+      textareaRef.current.style.height = "auto";
+      outputRef.current.style.height = "auto";
+
+      const textareaHeight = textareaRef.current.scrollHeight;
+      const outputHeight = outputRef.current.scrollHeight;
+      const maxHeight = Math.max(textareaHeight, outputHeight, 175);
+
+      textareaRef.current.style.height = maxHeight + "px";
+      outputRef.current.style.height = maxHeight + "px";
+    }
+  }, [text, transliteratedText, useSingleLineInput, outputOnlyMode]);
+
+  const reverseOutputToInput = (output: string): string | null => {
+    if (isDeseret) {
+      const unicode = deseretFontSupportsUnicode(selectedDeseretFont)
+        ? output
+        : deseretLatinToUnicode(output);
+      return phoneticFromDeseretText(unicode);
+    }
+    if (isBaybayin) return phoneticFromBaybayinText(output);
+    if (isBuhid) return phoneticFromBuhidText(output);
+    if (isHanunoo) return phoneticFromHanunooText(output);
+    if (isTagbanwa) return phoneticFromTagbanwaText(output);
+    if (isOgham) return phoneticFromOghamText(output);
+    // Latin-slot font ciphers — output text is already Latin.
+    if (usesLatinSlotKeyboard) return output;
+    return null;
+  };
+
+  const getProcessWord = ():
+    | ((word: string) => string | Promise<string>)
+    | undefined => {
+    let processWord: ((word: string) => string | Promise<string>) | undefined =
+      processors[currentAlphabet];
+    if (isPlqad && useKlinzhai) {
+      processWord = processPlqadTextKlinzhai;
+    }
+    if (isDeseret) {
+      const mode: DeseretMode = deseretModernActive ? "modern" : "classic";
+      const mapLatin = !deseretFontSupportsUnicode(selectedDeseretFont);
+      processWord = async (word: string) => {
+        const unicode = await processDeseretText(word, mode, {
+          includeLongAw: effectiveIncludeDeseretLongAw,
+          includeShortO: effectiveIncludeDeseretShortO,
+        });
+        return mapLatin ? deseretUnicodeToLatin(unicode) : unicode;
+      };
+    }
+    if (isBaybayin) {
+      processWord = (word: string) =>
+        processBaybayinText(
+          word,
+          useXVowelKiller,
+          selectedBaybayinFont,
+          useHollowKudlits,
+          baybayinUnicodeOutput,
+          phoneticMode,
+          useEnglishPronunciation,
+          useSpanishPronunciation,
+          phoneticPriority,
+          doktrinaLatinInput,
+        );
+    }
+    return processWord;
+  };
+
+  const processPlainText = async (plain: string): Promise<string> => {
+    const processWord = getProcessWord();
+    if (!processWord) return plain;
+    const parts = plain.split(/(\s+)/);
+    const mapped = await Promise.all(
+      parts.map(async (part) => {
+        if (!part || /^\s+$/.test(part)) return part;
+        return processWord(part);
+      }),
+    );
+    return mapped.join("");
+  };
+
+  const wordExportFontName = isDeseret
+    ? getDeseretFontById(selectedDeseretFont).familyName
+    : isBaybayin
+      ? getBaybayinFontById(selectedBaybayinFont).familyName
+      : isAurebesh
+        ? getAurebeshFontById(selectedAurebeshFont).familyName
+        : currentFontName;
+
+  const handleChange = async (currentText: string): Promise<void> => {
+    const processWord = getProcessWord();
+    if (!processWord) {
+      setWordsDictionary({});
+      setTransliteratedText("");
+      setOutputCursor(0);
+      return;
+    }
+
+    // Preserve newlines/tabs (needed for Doktrina Latin pastes and multi-line input).
+    const parts = currentText.split(/(\s+)/);
+    const newDict: { [word: string]: string } = {};
+    const mapped = await Promise.all(
+      parts.map(async (part) => {
+        if (!part || /^\s+$/.test(part)) return part;
+        const processed = await Promise.resolve(processWord(part));
+        newDict[part] = processed;
+        return processed;
+      }),
+    );
+    setWordsDictionary(newDict);
+    const nextOutput = mapped.join("");
+    setTransliteratedText(nextOutput);
+    setOutputCursor(nextOutput.length);
+  };
+
+  const syncInputFromOutput = (output: string) => {
+    setTransliteratedText(output);
+    const reversed = reverseOutputToInput(output);
+    if (reversed !== null) {
+      setText(reversed);
+      setInputCursor(reversed.length);
+    }
+  };
+
+  // Re-process when alphabet changes while keeping the same input text.
+  useEffect(() => {
+    void handleChange(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only when alphabet changes
+  }, [currentAlphabet]);
+
+  // Re-process Deseret when classic/modern mode, letter toggles, or font changes.
+  useEffect(() => {
+    if (!isDeseret) return;
+    if (!showExperimentalFeatures && deseretMode === "modern") {
+      setDeseretMode("classic");
+      return;
+    }
+    void handleChange(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    deseretMode,
+    showExperimentalFeatures,
+    selectedDeseretFont,
+    includeDeseretLongAw,
+    includeDeseretShortO,
+  ]);
+  useEffect(() => {
+    if (!isPlqad) return;
+    void handleChange(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useKlinzhai]);
+
+  // Re-process Baybayin when font or kudlit/vowel-killer options change.
+  useEffect(() => {
+    if (!isBaybayin) return;
+    void handleChange(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useXVowelKiller, useHollowKudlits, selectedBaybayinFont, useUnicode, doktrinaLatinInput, phoneticMode, useEnglishPronunciation, useSpanishPronunciation, phoneticPriority]);
+
+  // Keep Baybayin dictionary-driven output in sync when reviewing borrowed words.
+  useEffect(() => {
+    if (!isBaybayin || !text.trim() || Object.keys(wordsDictionary).length === 0) {
+      return;
+    }
+    const words = text.trim().split(/\s+/);
+    let cancelled = false;
+    void (async () => {
+      const processedWords = await Promise.all(
+        words.map(async (word) => {
+          if (wordsDictionary[word]) {
+            return wordsDictionary[word];
+          }
+          return processBaybayinText(
+            word,
+            useXVowelKiller,
+            selectedBaybayinFont,
+            useHollowKudlits,
+            baybayinUnicodeOutput,
+            phoneticMode,
+            useEnglishPronunciation,
+            useSpanishPronunciation,
+            phoneticPriority,
+            doktrinaLatinInput,
+          );
+        }),
+      );
+      if (!cancelled) {
+        setTransliteratedText(processedWords.join(" "));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    isBaybayin,
+    wordsDictionary,
+    text,
+    useXVowelKiller,
+    selectedBaybayinFont,
+    useHollowKudlits,
+    useUnicode,
+    doktrinaLatinInput,
+    phoneticMode,
+    useEnglishPronunciation,
+    useSpanishPronunciation,
+    phoneticPriority,
+  ]);
+
+  const handleClearInput = () => {
+    setText("");
+    setTransliteratedText("");
+    setInputCursor(0);
+    setOutputCursor(0);
+    clearWordsDictionary();
+  };
+
+  const applyInputAtCursor = (nextText: string, nextCursor: number) => {
+    setText(nextText);
+    setInputCursor(nextCursor);
+    void handleChange(nextText);
+    requestAnimationFrame(() => {
+      const el = textareaRef.current;
+      if (!el) return;
+      el.setSelectionRange(nextCursor, nextCursor);
+      if (outputOnlyMode) {
+        el.blur();
+        return;
+      }
+      el.focus();
+    });
+  };
+
+  const applyOutputAtCursor = (nextText: string, nextCursor: number) => {
+    syncInputFromOutput(nextText);
+    setOutputCursor(nextCursor);
+    requestAnimationFrame(() => {
+      const el = outputRef.current;
+      if (!el) return;
+      el.setSelectionRange(nextCursor, nextCursor);
+      if (outputOnlyMode) {
+        el.blur();
+        return;
+      }
+      el.focus();
+    });
+  };
+
+  const getFieldSelection = (
+    field: "input" | "output",
+  ): { start: number; end: number } => {
+    const el = field === "input" ? textareaRef.current : outputRef.current;
+    const fallback = field === "input" ? inputCursor : outputCursor;
+    if (el && document.activeElement === el) {
+      return {
+        start: el.selectionStart ?? fallback,
+        end: el.selectionEnd ?? fallback,
+      };
+    }
+    return { start: fallback, end: fallback };
+  };
+
+  const targetField: "input" | "output" = outputOnlyMode
+    ? "output"
+    : activeField;
+
+  const handleKeyboardInsert = (payload: {
+    inputValue: string;
+    outputValue: string;
+  }) => {
+    if (payload.inputValue === "\n") {
+      if (targetField === "output") {
+        const { start, end } = getFieldSelection("output");
+        const nextText =
+          transliteratedText.slice(0, start) +
+          "\n" +
+          transliteratedText.slice(end);
+        applyOutputAtCursor(nextText, start + 1);
+      } else {
+        applyInputAtCursor(text.slice(0, inputCursor) + "\n" + text.slice(inputCursor), inputCursor + 1);
+      }
+      return;
+    }
+
+    if (usesSyllabicKeyboard && payload.inputValue !== "\n") {
+      const insert =
+        isBaybayin && useXVowelKiller && payload.inputValue === "+"
+          ? "x"
+          : payload.inputValue;
+      const sel = outputOnlyMode
+        ? { start: inputCursor, end: inputCursor }
+        : getFieldSelection("input");
+      const before = text.slice(0, sel.start);
+      const after = text.slice(sel.end);
+      const merged = mergeBaybayinKudlit(before, insert);
+      const inserted = merged ?? before + insert;
+      const nextText = inserted + after;
+      applyInputAtCursor(nextText, inserted.length);
+      return;
+    }
+
+    if (targetField === "output") {
+      const { start, end } = getFieldSelection("output");
+      // Key labels are already font/kudlit-aware (incl. hollow vs solid).
+      const value = payload.outputValue;
+      const nextText =
+        transliteratedText.slice(0, start) +
+        value +
+        transliteratedText.slice(end);
+      applyOutputAtCursor(nextText, start + value.length);
+      return;
+    }
+
+    const { start, end } = getFieldSelection("input");
+    const value =
+      isBaybayin && useXVowelKiller && payload.inputValue === "+"
+        ? "x"
+        : payload.inputValue;
+    const nextText = text.slice(0, start) + value + text.slice(end);
+    applyInputAtCursor(nextText, start + value.length);
+  };
+
+  const handleKeyboardBackspace = () => {
+    if (targetField === "output") {
+      const { start, end } = getFieldSelection("output");
+      if (start !== end) {
+        const nextText =
+          transliteratedText.slice(0, start) + transliteratedText.slice(end);
+        applyOutputAtCursor(nextText, start);
+        return;
+      }
+      if (start === 0) return;
+      const before = transliteratedText.slice(0, start);
+      // Digraphs are two+ Latin chars that render as one glyph.
+      const digraphMatch = matchKeyboardDigraph(before, currentAlphabet, useKlinzhai);
+      if (digraphMatch) {
+        const nextText =
+          transliteratedText.slice(0, start - digraphMatch) +
+          transliteratedText.slice(start);
+        applyOutputAtCursor(nextText, start - digraphMatch);
+        return;
+      }
+      const chars = [...before];
+      chars.pop();
+      const nextBefore = chars.join("");
+      const nextText = nextBefore + transliteratedText.slice(start);
+      applyOutputAtCursor(nextText, nextBefore.length);
+      return;
+    }
+
+    const { start, end } = getFieldSelection("input");
+    if (start !== end) {
+      const nextText = text.slice(0, start) + text.slice(end);
+      applyInputAtCursor(nextText, start);
+      return;
+    }
+    if (start === 0) return;
+
+    const before = text.slice(0, start);
+    // Deseret slash-phonemes delete as one unit.
+    const phonemeMatch = before.match(/\/[^/\n]+\/$/u);
+    if (phonemeMatch) {
+      const deleteCount = phonemeMatch[0].length;
+      const nextText = text.slice(0, start - deleteCount) + text.slice(start);
+      applyInputAtCursor(nextText, start - deleteCount);
+      return;
+    }
+    // Baybayin / Hanunoo inherent-a syllable from keyboard (ba, ka, nga, …).
+    if (usesSyllabicKeyboard && /nga$/i.test(before)) {
+      const nextText = text.slice(0, start - 3) + text.slice(start);
+      applyInputAtCursor(nextText, start - 3);
+      return;
+    }
+    if (usesSyllabicKeyboard && /[bcdfghjklmnpqrstwxy]a$/i.test(before)) {
+      const nextText = text.slice(0, start - 2) + text.slice(start);
+      applyInputAtCursor(nextText, start - 2);
+      return;
+    }
+    // Baybayin / Hanunoo kudlit / virama syllable (be, bi, b+, nge, ng+, …).
+    if (usesSyllabicKeyboard && /ng[eioux+]$/i.test(before)) {
+      const nextText = text.slice(0, start - 3) + text.slice(start);
+      applyInputAtCursor(nextText, start - 3);
+      return;
+    }
+    if (usesSyllabicKeyboard && /[bcdfghjklmnpqrstwxy][eioux+]$/i.test(before)) {
+      const nextText = text.slice(0, start - 2) + text.slice(start);
+      applyInputAtCursor(nextText, start - 2);
+      return;
+    }
+    // Ogham "ng" inserts as one unit.
+    if (isOgham && /ng$/i.test(before)) {
+      const nextText = text.slice(0, start - 2) + text.slice(start);
+      applyInputAtCursor(nextText, start - 2);
+      return;
+    }
+    const digraphLen = matchKeyboardDigraph(before, currentAlphabet, useKlinzhai);
+    if (digraphLen) {
+      const nextText = text.slice(0, start - digraphLen) + text.slice(start);
+      applyInputAtCursor(nextText, start - digraphLen);
+      return;
+    }
+
+    const nextText = text.slice(0, start - 1) + text.slice(start);
+    applyInputAtCursor(nextText, start - 1);
+  };
+
+  return (
+    <div>
+      <TransliteratorContainer
+        text={text}
+        transliteratedText={transliteratedText}
+        currentAlphabet={currentAlphabet}
+        textareaRef={textareaRef}
+        outputRef={outputRef}
+        onTextChange={(currentValue) => {
+          setText(currentValue);
+          setInputCursor(currentValue.length);
+          void handleChange(currentValue);
+        }}
+        onOutputChange={(currentValue) => {
+          syncInputFromOutput(currentValue);
+          setOutputCursor(currentValue.length);
+        }}
+        onClear={handleClearInput}
+        aurebeshTechNumbers={useTechNumbers}
+        useCombinedCharacters={useCombinedCharacters}
+        selectedAurebeshFont={selectedAurebeshFont}
+        selectedBaybayinFont={selectedBaybayinFont}
+        selectedDeseretFont={selectedDeseretFont}
+        fontSize={fontSize}
+        useKlinzhai={useKlinzhai}
+        useSingleLineInput={useSingleLineInput}
+        outputOnlyMode={outputOnlyMode}
+        suppressSoftKeyboard={outputOnlyMode}
+        onInputFocus={() => setActiveField("input")}
+        onOutputFocus={() => setActiveField("output")}
+        onInputCursorChange={setInputCursor}
+        onOutputCursorChange={setOutputCursor}
+      />
+      {isBaybayin && !phoneticMode && text.toLowerCase().includes("c") && (
+        <p className="note-paragraph">
+          * The letter &apos;c&apos; does not show in baybayin font. Replace any
+          c&apos;s with k&apos;s or s&apos;s accordingly. See the How To Read
+          section for more information.
+        </p>
+      )}
+      <CheckBoxContainer
+        currentAlphabet={currentAlphabet}
+        useCombinedCharacters={useCombinedCharacters}
+        useTechNumbers={useTechNumbers}
+        useKlinzhai={useKlinzhai}
+        selectedAurebeshFont={selectedAurebeshFont}
+        selectedBaybayinFont={selectedBaybayinFont}
+        selectedDeseretFont={selectedDeseretFont}
+        useXVowelKiller={useXVowelKiller}
+        useHollowKudlits={useHollowKudlits}
+        useUnicode={useUnicode}
+        doktrinaLatinInput={doktrinaLatinInput}
+        phoneticMode={phoneticMode}
+        useEnglishPronunciation={useEnglishPronunciation}
+        useSpanishPronunciation={useSpanishPronunciation}
+        phoneticPriority={phoneticPriority}
+        deseretMode={deseretMode}
+        includeDeseretLongAw={includeDeseretLongAw}
+        includeDeseretShortO={includeDeseretShortO}
+        showModernDeseret={showExperimentalFeatures}
+        fontSize={fontSize}
+        useSingleLineInput={useSingleLineInput}
+        textContainsBorrowedWords={textContainsBorrowedWords}
+        setUseCombinedCharacters={setUseCombinedCharacters}
+        setUseTechNumbers={setUseTechNumbers}
+        setUseKlinzhai={setUseKlinzhai}
+        setSelectedAurebeshFont={setSelectedAurebeshFont}
+        setSelectedBaybayinFont={setSelectedBaybayinFont}
+        setSelectedDeseretFont={setSelectedDeseretFont}
+        setUseXVowelKiller={setUseXVowelKiller}
+        setUseHollowKudlits={setUseHollowKudlits}
+        setUseUnicode={setUseUnicode}
+        setDoktrinaLatinInput={setDoktrinaLatinInput}
+        setPhoneticMode={setPhoneticMode}
+        setUseEnglishPronunciation={setUseEnglishPronunciation}
+        setUseSpanishPronunciation={setUseSpanishPronunciation}
+        setPhoneticPriority={setPhoneticPriority}
+        setDeseretMode={setDeseretMode}
+        setIncludeDeseretLongAw={setIncludeDeseretLongAw}
+        setIncludeDeseretShortO={setIncludeDeseretShortO}
+        setFontSize={setFontSize}
+        setUseSingleLineInput={setUseSingleLineInput}
+        setTextContainsBorrowedWords={setTextContainsBorrowedWords}
+        showOutputOnlyOption={showOnScreenKeyboard}
+        outputOnlyMode={outputOnlyMode}
+        setOutputOnlyMode={setOutputOnlyMode}
+        isSettingsOpen={isSettingsOpen}
+        setIsSettingsOpen={setIsSettingsOpen}
+      />
+      <div className="action-buttons">
+        {isBaybayin &&
+          showExperimentalFeatures &&
+          textContainsBorrowedWords && (
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              disabled={transliteratedText.trim().length === 0}
+              className={transliteratedText.trim().length > 0 ? "active" : ""}
+            >
+              Validate
+            </button>
+          )}
+        <SaveButtonContainter
+          originalText={text}
+          transliteratedText={transliteratedText}
+          showSettings={hasTransliteratorSettings(
+            currentAlphabet,
+            showOnScreenKeyboard,
+          )}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+        />
+      </div>
+      {showExperimentalFeatures && (
+        <WordFileTransliterator
+          processText={processPlainText}
+          fontName={wordExportFontName}
+          alphabetName={currentAlphabet}
+        />
+      )}
+      {showOnScreenKeyboard && keyboardConfig && (
+        <Keyboard
+          layout={keyboardConfig.layout}
+          onInsert={handleKeyboardInsert}
+          onBackspace={handleKeyboardBackspace}
+          onEnter={() =>
+            handleKeyboardInsert({ inputValue: "\n", outputValue: "\n" })
+          }
+          fontClass={keyboardConfig.fontClass}
+        />
+      )}
+      {isBaybayin && isDialogOpen && (
+        <WordReviewDialog
+          onClose={() => setIsDialogOpen(false)}
+          useXVowelKiller={useXVowelKiller}
+          phoneticMode={phoneticMode}
+          useEnglishPronunciation={useEnglishPronunciation}
+          useSpanishPronunciation={useSpanishPronunciation}
+          phoneticPriority={phoneticPriority}
+          wordsWithC={Object.keys(wordsDictionary).filter((word) => {
+            const lowerWord = word.toLowerCase();
+            return (
+              lowerWord.includes("c") ||
+              lowerWord.includes("ch") ||
+              lowerWord.includes("j") ||
+              lowerWord.includes("qu")
+            );
+          })}
+          wordContainsBorrowedSound={wordContainsBorrowedSound}
+        />
+      )}
+    </div>
+  );
+}

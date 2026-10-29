@@ -1,0 +1,520 @@
+import Checkbox from "../CheckBox/Checkbox";
+import AurebeshFontSelector from "../AurebeshFontSelector/AurebeshFontSelector";
+import BaybayinFontSelector from "../BaybayinFontSelector/BaybayinFontSelector";
+import DeseretFontSelector from "../DeseretFontSelector/DeseretFontSelector";
+import CloseDialogButton from "../Buttons/DialogButtons/CloseDialogButton";
+import {
+  aurebeshFontSupportsStyleMatrix,
+  type AurebeshFontId,
+} from "../../data/AurebeshData/AUREBESH_FONTS_DATA";
+import {
+  baybayinSupportsUnicodeOption,
+  getBaybayinFontById,
+  type BaybayinFontId,
+} from "../../data/BaybayinData/BAYBAYIN_FONTS_DATA";
+import type { DeseretFontId } from "../../data/DeseretData/DESERET_FONTS_DATA";
+import {
+  TRANSLITERATOR_FONT_SIZE_OPTIONS,
+  type TransliteratorFontSize,
+} from "../../data/transliteratorFontSize";
+import {
+  useKeyboardKeySize,
+  type KeyboardKeySize,
+} from "../../contexts/KeyboardKeySizeContext";
+
+const KEYBOARD_KEY_SIZE_OPTIONS: {
+  id: KeyboardKeySize;
+  label: string;
+  title: string;
+}[] = [
+  { id: "small", label: "S", title: "Small" },
+  { id: "medium", label: "M", title: "Medium" },
+  { id: "large", label: "L", title: "Large" },
+];
+
+const ALPHABETS_WITH_SPECIFIC_SETTINGS = new Set([
+  "Aurebesh",
+  "Baybayin",
+  "Deseret",
+  "Plqad",
+]);
+
+export type TransliteratorSettingsDialogProps = {
+  currentAlphabet: string;
+  onClose: () => void;
+  useCombinedCharacters: boolean;
+  useTechNumbers: boolean;
+  useKlinzhai: boolean;
+  selectedAurebeshFont: AurebeshFontId;
+  selectedBaybayinFont: BaybayinFontId;
+  selectedDeseretFont: DeseretFontId;
+  useXVowelKiller: boolean;
+  useUnicode: boolean;
+  doktrinaLatinInput: boolean;
+  textContainsBorrowedWords: boolean;
+  useHollowKudlits: boolean;
+  phoneticMode: boolean;
+  useEnglishPronunciation: boolean;
+  useSpanishPronunciation: boolean;
+  phoneticPriority: "english" | "spanish";
+  deseretMode: "classic" | "modern";
+  includeDeseretLongAw: boolean;
+  includeDeseretShortO: boolean;
+  showModernDeseret?: boolean;
+  fontSize: TransliteratorFontSize;
+  useSingleLineInput: boolean;
+  showOutputOnlyOption?: boolean;
+  outputOnlyMode: boolean;
+  setUseCombinedCharacters: (checked: boolean) => void;
+  setUseTechNumbers: (checked: boolean) => void;
+  setUseKlinzhai: (checked: boolean) => void;
+  setSelectedAurebeshFont: (fontId: AurebeshFontId) => void;
+  setSelectedBaybayinFont: (fontId: BaybayinFontId) => void;
+  setSelectedDeseretFont: (fontId: DeseretFontId) => void;
+  setUseXVowelKiller: (checked: boolean) => void;
+  setTextContainsBorrowedWords: (checked: boolean) => void;
+  setUseHollowKudlits: (checked: boolean) => void;
+  setUseUnicode: (checked: boolean) => void;
+  setDoktrinaLatinInput: (checked: boolean) => void;
+  setPhoneticMode: (checked: boolean) => void;
+  setUseEnglishPronunciation: (checked: boolean) => void;
+  setUseSpanishPronunciation: (checked: boolean) => void;
+  setPhoneticPriority: (priority: "english" | "spanish") => void;
+  setDeseretMode: (mode: "classic" | "modern") => void;
+  setIncludeDeseretLongAw: (checked: boolean) => void;
+  setIncludeDeseretShortO: (checked: boolean) => void;
+  setFontSize: (size: TransliteratorFontSize) => void;
+  setUseSingleLineInput: (checked: boolean) => void;
+  setOutputOnlyMode: (checked: boolean) => void;
+};
+
+export function alphabetHasTransliteratorSettings(alphabet: string): boolean {
+  return (
+    alphabet === "Aurebesh" || alphabet === "Plqad" || alphabet === "Baybayin"
+  );
+}
+
+export default function TransliteratorSettingsDialog({
+  currentAlphabet,
+  onClose,
+  useCombinedCharacters,
+  useTechNumbers,
+  useKlinzhai,
+  selectedAurebeshFont,
+  selectedBaybayinFont,
+  selectedDeseretFont,
+  useXVowelKiller,
+  textContainsBorrowedWords,
+  useHollowKudlits,
+  useUnicode,
+  doktrinaLatinInput,
+  phoneticMode,
+  useEnglishPronunciation,
+  useSpanishPronunciation,
+  phoneticPriority,
+  deseretMode,
+  includeDeseretLongAw,
+  includeDeseretShortO,
+  showModernDeseret = false,
+  fontSize,
+  useSingleLineInput,
+  showOutputOnlyOption = false,
+  outputOnlyMode,
+  setUseCombinedCharacters,
+  setUseTechNumbers,
+  setUseKlinzhai,
+  setSelectedAurebeshFont,
+  setSelectedBaybayinFont,
+  setSelectedDeseretFont,
+  setUseXVowelKiller,
+  setTextContainsBorrowedWords,
+  setUseHollowKudlits,
+  setUseUnicode,
+  setDoktrinaLatinInput,
+  setPhoneticMode,
+  setUseEnglishPronunciation,
+  setUseSpanishPronunciation,
+  setPhoneticPriority,
+  setDeseretMode,
+  setIncludeDeseretLongAw,
+  setIncludeDeseretShortO,
+  setFontSize,
+  setUseSingleLineInput,
+  setOutputOnlyMode,
+}: TransliteratorSettingsDialogProps) {
+  const { keySize, setKeySize } = useKeyboardKeySize();
+  const selectedBaybayinFontEntry = getBaybayinFontById(selectedBaybayinFont);
+  const prioritizeEnabled =
+    phoneticMode && useEnglishPronunciation && useSpanishPronunciation;
+  const showAlphabetSettings =
+    ALPHABETS_WITH_SPECIFIC_SETTINGS.has(currentAlphabet);
+
+  return (
+    <dialog
+      className="dialog-overlay"
+      open
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="dialog-box transliterator-panel-dialog transliterator-settings-dialog"
+        role="document"
+      >
+        <CloseDialogButton onClose={onClose} />
+        <div className="dialog-header">
+          <div className="dialog-header-top-row">
+            <h3>Settings</h3>
+          </div>
+        </div>
+        <div className="dialog-content">
+          {showAlphabetSettings && (
+            <section className="transliterator-settings-section">
+              <h4 className="transliterator-settings-section-title">
+                {currentAlphabet} Settings
+              </h4>
+
+              {currentAlphabet === "Aurebesh" && (
+                <div className="transliterator-settings-font-row">
+                  <AurebeshFontSelector
+                    selectedFontId={selectedAurebeshFont}
+                    onChange={setSelectedAurebeshFont}
+                  />
+                </div>
+              )}
+
+              {currentAlphabet === "Baybayin" && (
+                <div className="transliterator-settings-font-row">
+                  <BaybayinFontSelector
+                    selectedFontId={selectedBaybayinFont}
+                    onChange={setSelectedBaybayinFont}
+                  />
+                </div>
+              )}
+
+              {currentAlphabet === "Deseret" && (
+                <div className="transliterator-settings-font-row">
+                  <DeseretFontSelector
+                    selectedFontId={selectedDeseretFont}
+                    onChange={setSelectedDeseretFont}
+                  />
+                </div>
+              )}
+
+              <div className="transliterator-settings-options">
+                {currentAlphabet === "Aurebesh" && (
+                  <>
+                    <Checkbox
+                      checked={useCombinedCharacters}
+                      onChange={setUseCombinedCharacters}
+                      label="Include combined characters."
+                      title="Maps digraphs such as ch, sh, ae, th, ng, and oo to combined symbols."
+                    />
+                    {aurebeshFontSupportsStyleMatrix(selectedAurebeshFont) && (
+                      <Checkbox
+                        checked={useTechNumbers}
+                        onChange={setUseTechNumbers}
+                        label="Use tech numbers."
+                        title="Use tech numbers instead of Arabic."
+                      />
+                    )}
+                  </>
+                )}
+
+                {currentAlphabet === "Plqad" && (
+                  <Checkbox
+                    checked={useKlinzhai}
+                    onChange={setUseKlinzhai}
+                    label="Input language is English."
+                  />
+                )}
+
+                {currentAlphabet === "Deseret" && (
+                  <>
+                    {deseretMode !== "modern" && (
+                      <>
+                        <Checkbox
+                          checked={includeDeseretLongAw}
+                          onChange={setIncludeDeseretLongAw}
+                          label={'Include "𐐃" (Long Aw)'}
+                          title={
+                            'When on, the "caught/awe" sound uses 𐐃. When off, it merges into 𐐂 (Western American cot-caught merger).'
+                          }
+                        />
+                        <Checkbox
+                          checked={includeDeseretShortO}
+                          onChange={setIncludeDeseretShortO}
+                          label={'Include "𐐉" (Short O)'}
+                          title={
+                            'When on, the British "hot" vowel uses 𐐉. When off, American/common English uses 𐐂 instead.'
+                          }
+                        />
+                      </>
+                    )}
+                    <div
+                      className="phonetic-priority-row"
+                      title="Classic uses the historical British er (short o + r). Modern uses the American er (short u + r)."
+                    >
+                      <span className="phonetic-priority-label">Mode</span>
+                      <div
+                        className="phonetic-priority-toggle"
+                        role="group"
+                        aria-label="Deseret mode"
+                      >
+                        <button
+                          type="button"
+                          className={
+                            deseretMode === "classic"
+                              ? "phonetic-priority-option active"
+                              : "phonetic-priority-option"
+                          }
+                          aria-pressed={deseretMode === "classic"}
+                          onClick={() => setDeseretMode("classic")}
+                        >
+                          Classic
+                        </button>
+                        {showModernDeseret && (
+                          <button
+                            type="button"
+                            className={
+                              deseretMode === "modern"
+                                ? "phonetic-priority-option active"
+                                : "phonetic-priority-option"
+                            }
+                            aria-pressed={deseretMode === "modern"}
+                            onClick={() => setDeseretMode("modern")}
+                          >
+                            Modern
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {currentAlphabet === "Baybayin" && (
+                  <>
+                    <div className="phonetic-mode-settings">
+                      <Checkbox
+                        checked={phoneticMode}
+                        onChange={setPhoneticMode}
+                        label="Phonetic mode"
+                        title="Look up English/Spanish pronunciation and Tagalize before converting to Baybayin. Off = transliterate Latin spelling as written."
+                        disabled={doktrinaLatinInput}
+                      />
+                      <div
+                        className={`phonetic-mode-settings-collapse${phoneticMode && !doktrinaLatinInput ? " is-open" : ""}`}
+                        aria-hidden={!phoneticMode || doktrinaLatinInput}
+                      >
+                        <div
+                          className="phonetic-mode-settings-collapse-inner"
+                          {...(!phoneticMode || doktrinaLatinInput
+                            ? { inert: true as const }
+                            : {})}
+                        >
+                          <div className="phonetic-mode-settings-group">
+                            <Checkbox
+                              checked={useEnglishPronunciation}
+                              onChange={setUseEnglishPronunciation}
+                              label="Use English"
+                              title="Tagalize words found in the English pronunciation dictionary."
+                            />
+                            <Checkbox
+                              checked={useSpanishPronunciation}
+                              onChange={setUseSpanishPronunciation}
+                              label="Use Spanish"
+                              title="Tagalize words found in the Spanish pronunciation dictionary."
+                            />
+                            <div
+                              className={`phonetic-priority-row${prioritizeEnabled ? "" : " phonetic-priority-row--disabled"}`}
+                              title={
+                                prioritizeEnabled
+                                  ? "Which language to try first when both dictionaries are enabled."
+                                  : "Enable both Use English and Use Spanish to change priority."
+                              }
+                            >
+                              <span className="phonetic-priority-label">
+                                Prioritize
+                              </span>
+                              <div
+                                className="phonetic-priority-toggle"
+                                role="group"
+                                aria-label="Pronunciation priority"
+                              >
+                                <button
+                                  type="button"
+                                  className={
+                                    phoneticPriority === "spanish"
+                                      ? "phonetic-priority-option active"
+                                      : "phonetic-priority-option"
+                                  }
+                                  disabled={!prioritizeEnabled}
+                                  aria-pressed={phoneticPriority === "spanish"}
+                                  onClick={() => setPhoneticPriority("spanish")}
+                                >
+                                  Spanish
+                                </button>
+                                <button
+                                  type="button"
+                                  className={
+                                    phoneticPriority === "english"
+                                      ? "phonetic-priority-option active"
+                                      : "phonetic-priority-option"
+                                  }
+                                  disabled={!prioritizeEnabled}
+                                  aria-pressed={phoneticPriority === "english"}
+                                  onClick={() => setPhoneticPriority("english")}
+                                >
+                                  English
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {selectedBaybayinFontEntry.supportsHollowKudlits && (
+                      <Checkbox
+                        checked={useHollowKudlits}
+                        onChange={setUseHollowKudlits}
+                        label="Use hollow kudlits"
+                        title="Use hollow kudlit marks for e/o (vs filled marks for i/u)."
+                      />
+                    )}
+                    {baybayinSupportsUnicodeOption(selectedBaybayinFont) && (
+                      <Checkbox
+                        checked={useUnicode}
+                        onChange={setUseUnicode}
+                        label="Use Unicode"
+                        title="Output real Baybayin Unicode characters while keeping the selected font."
+                        disabled={doktrinaLatinInput}
+                      />
+                    )}
+                    <Checkbox
+                      checked={doktrinaLatinInput}
+                      onChange={(checked) => {
+                        setDoktrinaLatinInput(checked);
+                        if (checked) {
+                          setPhoneticMode(false);
+                          setTextContainsBorrowedWords(false);
+                        }
+                      }}
+                      label="Doktrina Latin → Unicode"
+                      title="Input is already Paul Morrow / Tagalog Doctrina Latin encoding (e.g. Mg+ank+). Convert it to Unicode Baybayin."
+                    />
+                    <Checkbox
+                      checked={textContainsBorrowedWords}
+                      onChange={setTextContainsBorrowedWords}
+                      label="Text contains borrowed words"
+                      disabled={doktrinaLatinInput}
+                    />
+                    {selectedBaybayinFontEntry.supportsXVowelKiller && (
+                      <Checkbox
+                        checked={useXVowelKiller}
+                        onChange={setUseXVowelKiller}
+                        label='Use "x" vowel killer.'
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+            </section>
+          )}
+
+          <section className="transliterator-settings-section">
+            <h4 className="transliterator-settings-section-title">
+              Transliterator Settings
+            </h4>
+            <div className="transliterator-settings-options">
+              <div
+                className="phonetic-priority-row"
+                title="Size of text in the transliterator input and output."
+              >
+                <span className="phonetic-priority-label">Font size</span>
+                <div
+                  className="phonetic-priority-toggle"
+                  role="group"
+                  aria-label="Font size"
+                >
+                  {TRANSLITERATOR_FONT_SIZE_OPTIONS.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      className={
+                        fontSize === option.id
+                          ? "phonetic-priority-option active"
+                          : "phonetic-priority-option"
+                      }
+                      aria-label={option.title}
+                      title={option.title}
+                      aria-pressed={fontSize === option.id}
+                      onClick={() => setFontSize(option.id)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {showOutputOnlyOption && (
+                <div
+                  className="phonetic-priority-row"
+                  title="Size of keys on the on-screen keyboard."
+                >
+                  <span className="phonetic-priority-label">Key size</span>
+                  <div
+                    className="phonetic-priority-toggle"
+                    role="group"
+                    aria-label="Keyboard key size"
+                  >
+                    {KEYBOARD_KEY_SIZE_OPTIONS.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={
+                          keySize === option.id
+                            ? "phonetic-priority-option active"
+                            : "phonetic-priority-option"
+                        }
+                        aria-label={option.title}
+                        title={option.title}
+                        aria-pressed={keySize === option.id}
+                        onClick={() => setKeySize(option.id)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <span className="mobile-only-control">
+                <Checkbox
+                  checked={useSingleLineInput}
+                  onChange={setUseSingleLineInput}
+                  label="Single-line input"
+                  title="Use single-line input and output boxes on mobile."
+                />
+              </span>
+
+              {showOutputOnlyOption && (
+                <Checkbox
+                  checked={outputOnlyMode}
+                  onChange={setOutputOnlyMode}
+                  label="Output only"
+                  title="Hide the Latin input and type with the on-screen keyboard. The phone keyboard stays closed."
+                />
+              )}
+            </div>
+          </section>
+
+          <div className="dialog-buttons">
+            <button type="button" className="confirm-button" onClick={onClose}>
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  );
+}

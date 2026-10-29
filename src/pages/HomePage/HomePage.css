@@ -1,0 +1,32 @@
+.homepage {
+  padding: 0 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.homepage > p {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 0 1rem 1rem;
+  }
+
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

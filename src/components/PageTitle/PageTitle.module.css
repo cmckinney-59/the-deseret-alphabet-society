@@ -1,0 +1,31 @@
+.page-title {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4vw, 2.35rem);
+  font-weight: 600;
+  color: var(--navy);
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.page-title::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  margin: 0.7rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+:global(.dark-mode) .page-title {
+  color: var(--gold-soft);
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.75rem;
+  }
+}

@@ -1,0 +1,287 @@
+import { useState, useEffect } from "react";
+import type { CSSProperties, RefObject } from "react";
+import { ALPHABETS_DATA } from "../../data/ALPHABETS_DATA";
+import {
+  getAurebeshOutputFontClass,
+  type AurebeshFontId,
+} from "../../data/AurebeshData/AUREBESH_FONTS_DATA";
+import {
+  getBaybayinFontClass,
+  type BaybayinFontId,
+} from "../../data/BaybayinData/BAYBAYIN_FONTS_DATA";
+import {
+  getDeseretFontClass,
+  type DeseretFontId,
+} from "../../data/DeseretData/DESERET_FONTS_DATA";
+import {
+  DEFAULT_TRANSLITERATOR_FONT_SIZE,
+  getTransliteratorFontSizePx,
+  type TransliteratorFontSize,
+} from "../../data/transliteratorFontSize";
+
+interface TransliteratorContainerProps {
+  text: string;
+  transliteratedText: string;
+  currentAlphabet: string;
+  textareaRef: RefObject<HTMLTextAreaElement | HTMLDivElement | null>;
+  outputRef: RefObject<HTMLTextAreaElement | null>;
+  onTextChange: (value: string) => void;
+  onOutputChange: (value: string) => void;
+  onClear: () => void;
+  useRichTextInput?: boolean;
+  aurebeshTechNumbers?: boolean;
+  useCombinedCharacters?: boolean;
+  useKlinzhai?: boolean;
+  selectedAurebeshFont?: AurebeshFontId;
+  selectedBaybayinFont?: BaybayinFontId;
+  selectedDeseretFont?: DeseretFontId;
+  fontSize?: TransliteratorFontSize;
+  useSingleLineInput?: boolean;
+  /** Hide the Latin input and show only the transliterated output. */
+  outputOnlyMode?: boolean;
+  /** Hide the device soft keyboard (e.g. in output-only mode). */
+  suppressSoftKeyboard?: boolean;
+  onInputFocus?: () => void;
+  onOutputFocus?: () => void;
+  onInputCursorChange?: (cursor: number) => void;
+  onOutputCursorChange?: (cursor: number) => void;
+}
+
+export default function TransliteratorContainer({
+  text,
+  transliteratedText,
+  currentAlphabet,
+  textareaRef,
+  outputRef,
+  onTextChange,
+  onOutputChange,
+  onClear,
+  useRichTextInput = false,
+  aurebeshTechNumbers = false,
+  useCombinedCharacters = false,
+  useKlinzhai = false,
+  selectedAurebeshFont,
+  selectedBaybayinFont,
+  selectedDeseretFont,
+  fontSize = DEFAULT_TRANSLITERATOR_FONT_SIZE,
+  useSingleLineInput = false,
+  outputOnlyMode = false,
+  suppressSoftKeyboard = false,
+  onInputFocus,
+  onOutputFocus,
+  onInputCursorChange,
+  onOutputCursorChange,
+}: TransliteratorContainerProps) {
+  const [isBold] = useState(false);
+  const textareaHasText = text.length > 0;
+  const alphabetEntry = ALPHABETS_DATA.find((a) => a.name === currentAlphabet);
+
+  useEffect(() => {
+    if (
+      useRichTextInput &&
+      text === "" &&
+      textareaRef.current &&
+      "innerHTML" in textareaRef.current
+    ) {
+      textareaRef.current.innerHTML = "";
+    }
+  }, [text, useRichTextInput, textareaRef]);
+
+  useEffect(() => {
+    if (
+      useRichTextInput &&
+      text.length > 0 &&
+      textareaRef.current &&
+      "innerText" in textareaRef.current &&
+      textareaRef.current.innerText === ""
+    ) {
+      textareaRef.current.innerText = text;
+    }
+  }, [useRichTextInput, textareaRef, text]);
+
+  const getFontClass = () => {
+    if ((!textareaHasText && !transliteratedText) || !alphabetEntry) return "";
+    if (alphabetEntry.name === "Aurebesh") {
+      return getAurebeshOutputFontClass(
+        selectedAurebeshFont ?? "af",
+        useCombinedCharacters,
+        aurebeshTechNumbers,
+      );
+    }
+    if (alphabetEntry.name === "Baybayin" && selectedBaybayinFont) {
+      return getBaybayinFontClass(selectedBaybayinFont);
+    }
+    if (alphabetEntry.name === "Deseret" && selectedDeseretFont) {
+      return getDeseretFontClass(selectedDeseretFont);
+    }
+    const matrixBinary = alphabetEntry.outputFontClassMatrixBinary;
+    if (matrixBinary) {
+      return matrixBinary[Number(useKlinzhai)];
+    }
+    return alphabetEntry.outputFontClass;
+  };
+
+  const applyFormat = (command: string) => {
+    document.execCommand(command, false);
+    const el = textareaRef.current;
+    if (el && "innerText" in el) {
+      onTextChange((el as HTMLDivElement).innerText ?? "");
+    }
+  };
+
+  const fontSizePx = getTransliteratorFontSizePx(fontSize);
+
+  return (
+    <div
+      className={`transliteration-container${
+        useSingleLineInput ? " single-line-mode" : ""
+      }${outputOnlyMode ? " output-only-mode" : ""}`}
+      style={
+        {
+          "--transliterator-font-size": `${fontSizePx}px`,
+        } as CSSProperties
+      }
+    >
+      <div
+        className={`textarea-wrapper${outputOnlyMode ? " input-hidden" : ""}`}
+        aria-hidden={outputOnlyMode || undefined}
+      >
+        {useRichTextInput ? (
+          <>
+            <div
+              className="rich-text-toolbar"
+              role="toolbar"
+              aria-label="Text formatting"
+            >
+              <button
+                type="button"
+                className="rich-text-toolbar-button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  applyFormat("bold");
+                }}
+                aria-label="Bold"
+                title="Bold"
+              >
+                B
+              </button>
+              <button
+                type="button"
+                className="rich-text-toolbar-button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  applyFormat("italic");
+                }}
+                aria-label="Italic"
+                title="Italic"
+              >
+                I
+              </button>
+              <button
+                type="button"
+                className="rich-text-toolbar-button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  applyFormat("underline");
+                }}
+                aria-label="Underline"
+                title="Underline"
+              >
+                U
+              </button>
+            </div>
+            <div
+              ref={textareaRef as RefObject<HTMLDivElement | null>}
+              className="transliteration-textarea transliteration-rich-textarea"
+              contentEditable
+              suppressContentEditableWarning
+              data-placeholder="rich text input"
+              onInput={(e) => {
+                const plainText =
+                  (e.currentTarget as HTMLDivElement).innerText ?? "";
+                onTextChange(plainText);
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                const plainText = e.clipboardData.getData("text/plain");
+                document.execCommand("insertText", false, plainText);
+                onTextChange(
+                  (e.currentTarget as HTMLDivElement).innerText ?? "",
+                );
+              }}
+            />
+          </>
+        ) : (
+          <textarea
+            ref={textareaRef as RefObject<HTMLTextAreaElement | null>}
+            className={`transliteration-textarea ${
+              isBold ? "transliteration-bold" : ""
+            }`}
+            placeholder="Enter text here..."
+            rows={1}
+            value={text}
+            tabIndex={outputOnlyMode ? -1 : undefined}
+            inputMode={suppressSoftKeyboard ? "none" : undefined}
+            readOnly={suppressSoftKeyboard}
+            onChange={(e) => {
+              const currentValue = e.target.value;
+              onTextChange(currentValue);
+            }}
+            onFocus={() => {
+              onInputFocus?.();
+            }}
+            onSelect={(e) => {
+              onInputCursorChange?.(e.currentTarget.selectionStart ?? 0);
+            }}
+            onBlur={(e) => {
+              onInputCursorChange?.(e.currentTarget.selectionStart ?? 0);
+            }}
+          />
+        )}
+        {text.length > 0 && !outputOnlyMode && (
+          <button
+            className="clear-input-button"
+            onClick={onClear}
+            aria-label="Clear input"
+          >
+            ×
+          </button>
+        )}
+      </div>
+      <div className="textarea-wrapper">
+        <textarea
+          ref={outputRef}
+          className={`transliteration-output ${
+            transliteratedText ? getFontClass() : ""
+          } ${isBold ? "transliteration-bold" : ""}`}
+          placeholder="Output appears here..."
+          rows={1}
+          value={transliteratedText}
+          inputMode={suppressSoftKeyboard ? "none" : undefined}
+          aria-label="Transliterated output"
+          onChange={(e) => {
+            onOutputChange(e.target.value);
+          }}
+          onFocus={() => {
+            onOutputFocus?.();
+          }}
+          onSelect={(e) => {
+            onOutputCursorChange?.(e.currentTarget.selectionStart ?? 0);
+          }}
+          onBlur={(e) => {
+            onOutputCursorChange?.(e.currentTarget.selectionStart ?? 0);
+          }}
+        />
+        {transliteratedText.length > 0 && (
+          <button
+            className="clear-output-button"
+            onClick={onClear}
+            aria-label="Clear output"
+          >
+            ×
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

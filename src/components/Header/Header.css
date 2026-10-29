@@ -1,0 +1,146 @@
+.App-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: var(--header-height);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 0.75rem max(1rem, env(safe-area-inset-right)) 0.85rem
+    max(1rem, env(safe-area-inset-left));
+  background:
+    linear-gradient(
+      180deg,
+      rgba(197, 165, 114, 0.18) 0%,
+      transparent 42%
+    ),
+    var(--header-bg);
+  color: var(--nav-text);
+  margin: 0;
+  flex-shrink: 0;
+  border-bottom: 3px solid var(--accent);
+  box-shadow: 0 2px 12px rgba(12, 35, 64, 0.28);
+  z-index: 1000;
+  box-sizing: border-box;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.App-Header-Text {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.6vw, 1.85rem);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--nav-text);
+}
+
+.header-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.header-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.95rem;
+  border-radius: 2px;
+  text-decoration: none;
+  color: rgba(244, 239, 228, 0.88);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.header-tab:hover {
+  background-color: rgba(197, 165, 114, 0.14);
+  color: #fff;
+}
+
+.header-tab--active {
+  background-color: rgba(197, 165, 114, 0.18);
+  color: #fff;
+  border-bottom-color: var(--accent);
+}
+
+.dark-mode-toggle {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgba(197, 165, 114, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 999px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  margin-left: auto;
+}
+
+.dark-mode-toggle:hover {
+  background-color: rgba(197, 165, 114, 0.18);
+  border-color: var(--accent);
+}
+
+.dark-mode-toggle .icon {
+  color: var(--gold-soft);
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .App-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .header-brand {
+    padding-right: 2.75rem;
+  }
+
+  .header-tabs {
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.15rem;
+  }
+
+  .dark-mode-toggle {
+    position: absolute;
+    right: max(0.75rem, env(safe-area-inset-right));
+    top: 0.65rem;
+    margin-left: 0;
+  }
+}

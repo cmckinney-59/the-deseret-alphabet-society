@@ -1,0 +1,165 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 720px;
+  margin: 1rem auto 0;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--button-border);
+  border-radius: 12px;
+}
+
+.row,
+.rowLetters {
+  display: flex;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.rowLetters .keyLetter {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.35rem 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--button-border);
+  border-radius: 8px;
+  box-shadow: none;
+  text-shadow: none;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+/* Beat global `button` / `.dark-mode button` blue text + bold weight */
+.keyboard .key {
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.key:hover {
+  background-color: color-mix(in srgb, var(--bg-primary) 70%, var(--button-border));
+}
+
+.key:active {
+  transform: scale(0.97);
+}
+
+.keyAction {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.keyActive {
+  background-color: color-mix(in srgb, var(--bg-primary) 55%, var(--text-primary));
+  border-color: var(--text-primary);
+}
+
+/* Key size variants */
+.sizeSmall {
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+
+.sizeSmall .row,
+.sizeSmall .rowLetters {
+  gap: 0.2rem;
+}
+
+.sizeSmall .key {
+  min-height: 2rem;
+  padding: 0.2rem 0.15rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+.sizeSmall .keyAction {
+  font-size: 0.65rem;
+}
+
+.sizeMedium .key {
+  min-height: 2.6rem;
+  padding: 0.35rem 0.25rem;
+  font-size: 1.15rem;
+}
+
+.sizeMedium .keyAction {
+  font-size: 0.8rem;
+}
+
+.sizeLarge {
+  gap: 0.5rem;
+  padding: 0.85rem;
+}
+
+.sizeLarge .row,
+.sizeLarge .rowLetters {
+  gap: 0.45rem;
+}
+
+.sizeLarge .key {
+  min-height: 3.25rem;
+  padding: 0.45rem 0.3rem;
+  font-size: 1.4rem;
+  border-radius: 10px;
+}
+
+.sizeLarge .keyAction {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .keyboard {
+    padding: 0.5rem;
+    gap: 0.3rem;
+  }
+
+  .row {
+    gap: 0.25rem;
+  }
+
+  .sizeSmall .key {
+    min-height: 1.85rem;
+    font-size: 0.8rem;
+  }
+
+  .sizeSmall .keyAction {
+    font-size: 0.6rem;
+  }
+
+  .sizeMedium .key {
+    min-height: 2.35rem;
+    font-size: 1rem;
+  }
+
+  .sizeMedium .keyAction {
+    font-size: 0.7rem;
+  }
+
+  .sizeLarge .key {
+    min-height: 2.85rem;
+    font-size: 1.2rem;
+  }
+
+  .sizeLarge .keyAction {
+    font-size: 0.8rem;
+  }
+}

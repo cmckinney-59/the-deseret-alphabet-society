@@ -1,0 +1,135 @@
+.deseretDocumentCategory {
+  margin-top: 1.25rem;
+}
+
+.deseretDocumentCategory:first-of-type {
+  margin-top: 0.75rem;
+}
+
+.deseretDocumentCategoryTitle {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--navy);
+  text-align: left;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.35rem;
+}
+
+.dark-mode .deseretDocumentCategoryTitle {
+  color: var(--gold-soft);
+}
+
+.deseretDocumentGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+
+.deseretDocumentCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  min-width: 0;
+  box-shadow: 0 1px 3px rgba(12, 35, 64, 0.05);
+}
+
+.dark-mode .deseretDocumentCard {
+  background-color: rgba(21, 37, 56, 0.95);
+}
+
+.deseretDocumentPreview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8.5 / 11;
+  padding: 0;
+  border: 1px solid var(--button-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  cursor: zoom-in;
+}
+
+.deseretDocumentImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.deseretDocumentPdfBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+}
+
+.dark-mode .deseretDocumentPdfBadge {
+  color: var(--gold);
+}
+
+.deseretDocumentBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.deseretDocumentName {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.deseretDocumentAttribution {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.deseretDocumentActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.deseretDocumentButton {
+  border: 1px solid var(--button-border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 0.25rem 0.55rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.deseretDocumentButton:hover {
+  border-color: var(--accent);
+  color: var(--navy);
+}
+
+.dark-mode .deseretDocumentButton:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
