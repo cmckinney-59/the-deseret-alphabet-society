@@ -1,14 +1,18 @@
 .transliteratorPage {
   box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 768px) {
-  .transliteratorPage {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .transliteratorPage #options {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  .transliteratorPage #options {
+  .transliteratorPage #options select {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -17,5 +21,21 @@
   .transliteratorPage .transliteration-container {
     margin-left: 0;
     margin-right: 0;
+    gap: 0.75rem;
+  }
+
+  .transliteratorPage .transliteration-textarea,
+  .transliteratorPage .transliteration-output {
+    font-size: max(16px, var(--transliterator-font-size, 20px));
+    border-radius: 8px;
+  }
+
+  .transliteratorPage .baybayin-font-selector-row {
+    width: 100%;
+  }
+
+  .transliteratorPage .transliterator-settings-button {
+    width: 100%;
+    min-height: var(--touch-target, 44px);
   }
 }

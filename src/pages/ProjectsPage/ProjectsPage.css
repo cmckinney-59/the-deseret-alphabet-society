@@ -466,7 +466,7 @@
 
 @media (max-width: 768px) {
   .projectsPage {
-    padding: 0 0.5rem 1rem;
+    padding: 0 0 1rem;
   }
 
   .projectsPageHeader {
@@ -481,8 +481,32 @@
     align-self: flex-end;
   }
 
+  .projectTileGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
   .projectProgressList {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .projectsBrowseItem {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .projectsBrowseThumb {
+    width: 100%;
+    flex-basis: auto;
+    height: 10rem;
+  }
+
+  .projectsBrowseActions .downloadButton,
+  .projectsBrowseActions .previewButton,
+  .projectTile .downloadButton,
+  .projectTile .previewButton {
+    min-height: 2.5rem;
+    padding: 0.55rem 0.85rem;
   }
 
   .projectsPage .alphabet-table {
@@ -491,6 +515,12 @@
 
   .projectsPage .alphabet-table td {
     word-break: break-word;
+  }
+}
+
+@media (max-width: 420px) {
+  .projectTileGrid {
+    grid-template-columns: 1fr;
   }
 }
 

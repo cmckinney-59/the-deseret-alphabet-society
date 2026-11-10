@@ -128,25 +128,34 @@
 
 @media (max-width: 768px) {
   .keyboard {
-    padding: 0.5rem;
-    gap: 0.3rem;
+    padding: 0.45rem;
+    gap: 0.28rem;
+    border-radius: 10px;
+    margin-top: 0.75rem;
   }
 
-  .row {
-    gap: 0.25rem;
+  .row,
+  .rowLetters {
+    gap: 0.22rem;
+  }
+
+  .key {
+    /* Prefer comfortable tap targets without overflowing narrow screens */
+    min-height: 2.5rem;
+    touch-action: manipulation;
   }
 
   .sizeSmall .key {
-    min-height: 1.85rem;
-    font-size: 0.8rem;
+    min-height: 2.15rem;
+    font-size: 0.85rem;
   }
 
   .sizeSmall .keyAction {
-    font-size: 0.6rem;
+    font-size: 0.62rem;
   }
 
   .sizeMedium .key {
-    min-height: 2.35rem;
+    min-height: 2.5rem;
     font-size: 1rem;
   }
 
@@ -156,10 +165,10 @@
 
   .sizeLarge .key {
     min-height: 2.85rem;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .sizeLarge .keyAction {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 }

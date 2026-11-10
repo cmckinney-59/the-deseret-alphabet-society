@@ -1,8 +1,11 @@
 .donate-page {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
+  padding: 0 0 3rem;
   text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .donate-intro,
@@ -68,12 +71,17 @@
 
 @media (max-width: 768px) {
   .donate-page {
-    padding: 0 1rem 2.5rem;
+    padding: 0 0 2rem;
+  }
+
+  .donate-intro {
+    padding: 1rem;
   }
 
   .donate-button {
     width: 100%;
     justify-content: center;
     box-sizing: border-box;
+    min-height: var(--touch-target, 44px);
   }
 }

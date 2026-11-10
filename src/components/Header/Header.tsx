@@ -17,7 +17,10 @@ export default function Header(): JSX.Element {
   return (
     <header className="App-header">
       <div className="header-brand">
-        <h1 className="App-Header-Text">The Deseret Alphabet Society</h1>
+        <h1 className="App-Header-Text">
+          <span className="header-title-full">The Deseret Alphabet Society</span>
+          <span className="header-title-short">Deseret Alphabet Society</span>
+        </h1>
       </div>
       <nav className="header-tabs" aria-label="Primary">
         {TABS.map((tab) => (
