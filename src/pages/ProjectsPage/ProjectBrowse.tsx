@@ -14,24 +14,14 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "Deseret", label: "Deseret" },
 ];
 
-function pdfPreviewSrc(fileUrl: string): string {
-  return `${fileUrl}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0`;
-}
-
 function BrowseThumb({ project }: { project: ProjectEntry }) {
   const [isOpen, setIsOpen] = useState(false);
   const canOpen = Boolean(project.fileUrl && project.fileType === "pdf");
 
   let body: ReactNode;
   if (project.fileUrl && project.fileType === "pdf") {
-    body = (
-      <iframe
-        className="projectsBrowseThumbFrame"
-        src={pdfPreviewSrc(project.fileUrl)}
-        title=""
-        tabIndex={-1}
-      />
-    );
+    // Avoid iframe PDF thumbnails — mobile browsers often download them.
+    body = <span className="projectsBrowseThumbLabel">PDF</span>;
   } else if (project.fileType === "zip") {
     body = <span className="projectsBrowseThumbLabel">ZIP</span>;
   } else {

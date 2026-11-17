@@ -8,23 +8,19 @@ type ProjectTilesProps = {
   projects: Project[];
 };
 
-function pdfPreviewSrc(fileUrl: string): string {
-  return `${fileUrl}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0`;
-}
-
 function ProjectTilePreview({ project }: { project: Project }) {
   const [isOpen, setIsOpen] = useState(false);
   const canOpen = Boolean(project.fileUrl && project.fileType === "pdf");
 
   let body: ReactNode;
   if (project.fileUrl && project.fileType === "pdf") {
+    // Avoid embedding PDFs in iframes for thumbnails — many mobile browsers
+    // download every iframe PDF as soon as the tile mounts.
     body = (
-      <iframe
-        className="projectTilePreviewFrame"
-        src={pdfPreviewSrc(project.fileUrl)}
-        title={`${project.name} preview`}
-        tabIndex={-1}
-      />
+      <div className="projectTilePreviewFallback">
+        <span className="projectTilePreviewKind">PDF</span>
+        <span className="projectTilePreviewFile">{project.fileName}</span>
+      </div>
     );
   } else if (project.fileType === "zip") {
     body = (

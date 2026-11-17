@@ -23,10 +23,10 @@ export default function CollapsibleSection({
   return (
     <div className={`collapsible-section ${className}`}>
       <button
+        type="button"
         className="collapsible-header"
         onClick={toggleExpanded}
         aria-expanded={isExpanded}
-        aria-controls="collapsible-content"
       >
         <h2 className="collapsible-title">{title}</h2>
         <span className={`collapsible-icon ${isExpanded ? "expanded" : ""}`}>
@@ -34,10 +34,16 @@ export default function CollapsibleSection({
         </span>
       </button>
       <div
-        id="collapsible-content"
         className={`collapsible-content ${isExpanded ? "expanded" : ""}`}
+        hidden={!isExpanded}
       >
-        <div className="collapsible-content-inner">{children}</div>
+        {/*
+          Only mount children while expanded so heavy embeds (PDF iframes,
+          large asset grids) do not load or download when the section is closed.
+        */}
+        {isExpanded ? (
+          <div className="collapsible-content-inner">{children}</div>
+        ) : null}
       </div>
     </div>
   );
