@@ -2,7 +2,7 @@ import CollapsibleSection from "../../CollapsibleSection/CollapsibleSection";
 
 export default function WhatIsDeseret() {
   return (
-    <CollapsibleSection title="What Is Deseret" defaultExpanded={true}>
+    <CollapsibleSection title="What Is Deseret" defaultExpanded={false}>
       <p>
         The Deseret Alphabet is a phonetic alphabet that was commisioned by Brigham Young in the 1850s.
         It was intended to help the new immigrants to the Salt Lake Valley learn English.

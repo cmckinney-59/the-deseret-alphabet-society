@@ -3,7 +3,7 @@ import DeseretTable from "./DeseretTable";
 
 export default function DeseretHowToRead() {
   return (
-    <CollapsibleSection title="How To Read" defaultExpanded={true}>
+    <CollapsibleSection title="How To Read" defaultExpanded={false}>
       <DeseretTable />
     </CollapsibleSection>
   );

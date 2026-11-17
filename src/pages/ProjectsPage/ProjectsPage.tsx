@@ -97,7 +97,7 @@ export default function ProjectsPage() {
         </div>
       ) : (
         <>
-          <CollapsibleSection title="Current Projects" defaultExpanded={true}>
+          <CollapsibleSection title="Current Projects" defaultExpanded={false}>
             <ProjectProgressList projects={currentProjects} />
           </CollapsibleSection>
 

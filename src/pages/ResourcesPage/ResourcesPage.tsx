@@ -17,7 +17,7 @@ export default function ResourcesPage() {
       <FontsSection />
       <DeseretMoreResources />
 
-      <CollapsibleSection title="ScriptWorks Projects" defaultExpanded={true}>
+      <CollapsibleSection title="ScriptWorks Projects" defaultExpanded={false}>
         <p>
           Completed Deseret Alphabet transcriptions you can preview and
           download.

@@ -27,6 +27,7 @@
 @media (max-width: 768px) {
   .page-title {
     font-size: 1.55rem;
+    margin-top: 0.35rem;
     margin-bottom: 1.15rem;
     padding-bottom: 0.5rem;
   }
