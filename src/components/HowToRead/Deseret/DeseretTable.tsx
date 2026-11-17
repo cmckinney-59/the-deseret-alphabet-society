@@ -23,24 +23,26 @@ export default function DeseretTable() {
       <p>
         ** NOTE: The character "𐐉" is only found in Brittish English. In American/Common English, the character "𐐂" is used.
       </p>
-      <table className="alphabet-table">
-        <thead>
-          <tr>
-            <th>Letter</th>
-            <th>Sound</th>
-            <th>Example</th>
-          </tr>
-        </thead>
-        <tbody>
-          {DESERET_DATA.map((letter) => (
-            <tr key={letter.upper}>
-              <td className="deseret-letter deseret-font">{letter.upper}</td>
-              <td>{letter.sound}</td>
-              <td>{letter.example}</td>
+      <div className="table-scroll-wrapper">
+        <table className="alphabet-table">
+          <thead>
+            <tr>
+              <th>Letter</th>
+              <th>Sound</th>
+              <th>Example</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {DESERET_DATA.map((letter) => (
+              <tr key={letter.upper}>
+                <td className="deseret-letter deseret-font">{letter.upper}</td>
+                <td>{letter.sound}</td>
+                <td>{letter.example}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

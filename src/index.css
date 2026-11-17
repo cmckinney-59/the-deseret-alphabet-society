@@ -621,9 +621,11 @@ button:hover:not(:disabled) {
 
 .collapsible-content-inner {
   padding: 1.5rem;
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   min-width: 0;
+  text-align: left;
 }
 
 .table-scroll-wrapper {
@@ -631,6 +633,13 @@ button:hover:not(:disabled) {
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.table-scroll-wrapper .alphabet-table {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 @media (max-width: 768px) {
@@ -2300,10 +2309,8 @@ button:hover:not(:disabled) {
 @media (max-width: 768px) {
   .alphabet-table {
     font-size: 12px;
-    display: block;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    min-width: 18rem;
   }
 
   .alphabet-table th,
@@ -2325,6 +2332,16 @@ button:hover:not(:disabled) {
 
   .fonts-mobile-sample {
     font-size: 2.35rem;
+  }
+
+  .collapsible-content-inner {
+    width: 100%;
+    text-align: left;
+  }
+
+  .collapsible-content-inner > h3,
+  .collapsible-content-inner > p {
+    max-width: 100%;
   }
 }
 
