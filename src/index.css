@@ -1980,13 +1980,38 @@ button:hover:not(:disabled) {
   color: var(--text-primary);
 }
 
-.fonts-table td:first-child {
-  font-size: 14px;
-  text-align: left;
-  background-color: transparent;
+.table-scroll-wrapper.fonts-table-desktop {
+  /* Keep the table outline from being clipped by overflow-x. */
+  padding: 3px;
+  box-sizing: border-box;
 }
 
+.alphabet-table.fonts-table {
+  table-layout: fixed;
+}
+
+.alphabet-table.fonts-table th:first-child {
+  width: 9.75rem;
+  /* Match other header cells; override alphabet letter-column styles. */
+  font-size: inherit;
+  text-align: center;
+  background-color: var(--navy);
+  color: var(--nav-text);
+  overflow-wrap: anywhere;
+}
+
+.alphabet-table.fonts-table td:first-child {
+  width: 9.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  background-color: transparent;
+  overflow-wrap: anywhere;
+}
+
+.fonts-table th:nth-child(3),
 .fonts-table td:nth-child(3) {
+  width: 7rem;
   font-family: inherit;
   font-weight: 400;
 }
@@ -2004,9 +2029,48 @@ button:hover:not(:disabled) {
 
 .alphabet-table.fonts-table td.fonts-table-sample {
   font-size: 3rem;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: center;
   font-weight: 400;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.alphabet-table.fonts-table td.fonts-table-sample[class*="deseret-font-"] {
+  font-size: 1.05rem;
+  overflow: visible;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-overflow: unset;
+}
+
+/* Slightly wider text faces still wrap to two rows at this size. */
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-adamic-bee,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-times-bee,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-tubee-blunt,
+.alphabet-table.fonts-table
+  td.fonts-table-sample.deseret-font-tubee-blunt-hollow-light,
+.alphabet-table.fonts-table
+  td.fonts-table-sample.deseret-font-tubee-blunt-hollow-medium,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-tubee-blunt-shadow,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-tubee-round,
+.alphabet-table.fonts-table
+  td.fonts-table-sample.deseret-font-tubee-round-hollow-light,
+.alphabet-table.fonts-table
+  td.fonts-table-sample.deseret-font-tubee-round-hollow-medium,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-tubee-round-shadow {
+  font-size: 0.95rem;
+}
+
+/* These faces are much wider per letter than the text fonts. */
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-xenoglossa,
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-xenoglossa-alt {
+  font-size: 0.72rem;
+}
+
+.alphabet-table.fonts-table td.fonts-table-sample.deseret-font-xylocopa {
+  font-size: 0.6rem;
 }
 
 .fonts-table-icon-button {
@@ -2103,6 +2167,28 @@ button:hover:not(:disabled) {
   padding: 0;
 }
 
+.fonts-table-section {
+  margin-top: 1.5rem;
+}
+
+.fonts-table-section-note {
+  margin: 0 0 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--button-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.dark-mode .fonts-table-section-note {
+  background: rgba(21, 37, 56, 0.9);
+  color: var(--text-secondary);
+}
+
 @media (max-width: 768px) {
   .fonts-table-desktop {
     display: none;
@@ -2142,7 +2228,18 @@ button:hover:not(:disabled) {
   .fonts-mobile-sample {
     margin: 0.2rem 0 0;
     font-size: 3rem;
-    line-height: 1.3;
+    line-height: 1.35;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+
+  .fonts-mobile-sample[class*="deseret-font-"] {
+    font-size: 1.35rem;
+    overflow: visible;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    text-overflow: unset;
   }
 
   .fonts-mobile-actions {

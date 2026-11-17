@@ -412,6 +412,27 @@
 }
 
 @font-face {
+  font-family: "IDC Hesperapis";
+  src: url("./assets/fonts/deseret/Hesperapis/Hesperapis-Regular.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IDC Xenoglossa";
+  src: url("./assets/fonts/deseret/Xenoglossa/IDCXenoglossa.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IDC Xenoglossa Alt";
+  src: url("./assets/fonts/deseret/Xenoglossa/IDCXenoglossaAlt.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Unifont Upper";
   src: url("./assets/fonts/deseret/UnifontUpper/unifont_upper-18.0.01.otf")
     format("opentype");
@@ -575,6 +596,48 @@
 @font-face {
   font-family: "DeseretBee Legacy";
   src: url("./assets/fonts/deseret/FontsFromJoshuaEricksonWebpage/Other/_DeseretBee.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HuneyBee unicode";
+  src: url("./assets/fonts/deseret/unicode added/Huneybee-unicode-added.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bee Skep Serif unicode";
+  src: url("./assets/fonts/deseret/unicode added/beeskeps-unicode-added.otf")
+    format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Bateman unicode";
+  src: url("./assets/fonts/deseret/unicode added/DESERET-unicode-added.TTF")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Thibault unicode";
+  src: url("./assets/fonts/deseret/unicode added/Deseret-unicode-added.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Deseret Kearney unicode";
+  src: url("./assets/fonts/deseret/unicode added/Deseret_-unicode-added.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DeseretBee unicode";
+  src: url("./assets/fonts/deseret/unicode added/_DeseretBee-unicode-added.ttf")
     format("truetype");
   font-display: swap;
 }
@@ -1233,6 +1296,17 @@
   /* Capitals only (40 glyphs); Noto fills lowercase Deseret. */
   font-family: "IDC Nomada Gothic", "Noto Sans Deseret", sans-serif;
 }
+.deseret-font-hesperapis {
+  font-family: "IDC Hesperapis", "Noto Sans Deseret", serif;
+}
+.deseret-font-xenoglossa,
+.deseret-font-xenoglossa-alt {
+  /* Oi and Ew are absent from the source patterns; Noto fills those two. */
+  font-family: "IDC Xenoglossa", "Noto Sans Deseret", monospace;
+}
+.deseret-font-xenoglossa-alt {
+  font-family: "IDC Xenoglossa Alt", "Noto Sans Deseret", monospace;
+}
 .deseret-font-unifont-upper {
   font-family: "Unifont Upper", monospace;
 }
@@ -1307,6 +1381,24 @@
 }
 .deseret-font-deseret-bee-legacy {
   font-family: "DeseretBee Legacy", sans-serif;
+}
+.deseret-font-huneybee-unicode {
+  font-family: "HuneyBee unicode", "Noto Sans Deseret", sans-serif;
+}
+.deseret-font-bee-skep-unicode {
+  font-family: "Bee Skep Serif unicode", "Noto Sans Deseret", serif;
+}
+.deseret-font-legacy-unicode {
+  font-family: "Deseret Bateman unicode", "Noto Sans Deseret", serif;
+}
+.deseret-font-legacy-alt-unicode {
+  font-family: "Deseret Thibault unicode", "Noto Sans Deseret", serif;
+}
+.deseret-font-legacy-underscore-unicode {
+  font-family: "Deseret Kearney unicode", "Noto Sans Deseret", serif;
+}
+.deseret-font-deseret-bee-legacy-unicode {
+  font-family: "DeseretBee unicode", "Noto Sans Deseret", sans-serif;
 }
 .gallifreyan-font {
   font-family: "Gallifreyan", sans-serif;

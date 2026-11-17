@@ -6,6 +6,9 @@ export type DeseretFontId =
   | "desalph"
   | "xylocopa"
   | "nomada"
+  | "hesperapis"
+  | "xenoglossa"
+  | "xenoglossa-alt"
   | "unifont-upper"
   | "adamic-bee"
   | "times-bee"
@@ -30,7 +33,13 @@ export type DeseretFontId =
   | "deseret-legacy"
   | "deseret-legacy-alt"
   | "deseret-legacy-underscore"
-  | "deseret-bee-legacy";
+  | "deseret-bee-legacy"
+  | "huneybee-unicode"
+  | "bee-skep-unicode"
+  | "deseret-legacy-unicode"
+  | "deseret-legacy-alt-unicode"
+  | "deseret-legacy-underscore-unicode"
+  | "deseret-bee-legacy-unicode";
 
 export type DeseretFont = {
   id: DeseretFontId;
@@ -94,6 +103,18 @@ const DESERET_FONT_ATTRIBUTION: Partial<
     creator: "N E Davis / Illinois Deseret Consortium",
     sourceUrl: "https://github.com/sigilante/idc-nomada",
   },
+  hesperapis: {
+    creator: "N. E. Davis / Illinois Deseret Consortium",
+    sourceUrl: "https://github.com/sigilante/idc-hesperapis",
+  },
+  xenoglossa: {
+    creator: "Sigilante",
+    sourceUrl: "https://github.com/sigilante/idc-xenoglossa",
+  },
+  "xenoglossa-alt": {
+    creator: "Sigilante",
+    sourceUrl: "https://github.com/sigilante/idc-xenoglossa",
+  },
   "unifont-upper": {
     creator: "Roman Czyborra / Paul Hardy et al.",
     sourceUrl: "https://unifoundry.com/unifont/",
@@ -108,6 +129,16 @@ const DESERET_FONT_ATTRIBUTION: Partial<
   huneybee: { creator: "Daniel U. Thibault / James Kass" },
   "bee-skep": { creator: "Joseph Spicer" },
   "deseret-bee-legacy": { creator: "Joshua Erickson / Greg Kearney" },
+  "huneybee-unicode": { creator: "Daniel U. Thibault / James Kass" },
+  "bee-skep-unicode": { creator: "Joseph Spicer" },
+  "deseret-legacy-unicode": { creator: "Edward J. Bateman" },
+  "deseret-legacy-alt-unicode": {
+    creator: "Daniel U. Thibault / James Kass",
+  },
+  "deseret-legacy-underscore-unicode": { creator: "Greg Kearney" },
+  "deseret-bee-legacy-unicode": {
+    creator: "Joshua Erickson / Greg Kearney",
+  },
 };
 
 type DeseretFontBase = Omit<DeseretFont, "creator" | "sourceUrl">;
@@ -188,6 +219,39 @@ const DESERET_FONTS_BASE: DeseretFontBase[] = [
     downloadName: "IDCNomada.otf",
     supportsUnicode: true,
     license: "OFL",
+    category: "unicode",
+  },
+  {
+    id: "hesperapis",
+    label: "IDC Hesperapis",
+    familyName: "IDC Hesperapis",
+    outputFontClass: "deseret-font-hesperapis",
+    downloadPath: "deseret/Hesperapis/Hesperapis-Regular.otf",
+    downloadName: "Hesperapis-Regular.otf",
+    supportsUnicode: true,
+    license: "OFL",
+    category: "unicode",
+  },
+  {
+    id: "xenoglossa",
+    label: "IDC Xenoglossa",
+    familyName: "IDC Xenoglossa",
+    outputFontClass: "deseret-font-xenoglossa",
+    downloadPath: "deseret/Xenoglossa/IDCXenoglossa.ttf",
+    downloadName: "IDCXenoglossa.ttf",
+    supportsUnicode: true,
+    license: "MIT",
+    category: "unicode",
+  },
+  {
+    id: "xenoglossa-alt",
+    label: "IDC Xenoglossa Alt",
+    familyName: "IDC Xenoglossa Alt",
+    outputFontClass: "deseret-font-xenoglossa-alt",
+    downloadPath: "deseret/Xenoglossa/IDCXenoglossaAlt.ttf",
+    downloadName: "IDCXenoglossaAlt.ttf",
+    supportsUnicode: true,
+    license: "MIT",
     category: "unicode",
   },
   {
@@ -487,6 +551,72 @@ const DESERET_FONTS_BASE: DeseretFontBase[] = [
     supportsUnicode: false,
     license: "Free",
     category: "other",
+  },
+  {
+    id: "huneybee-unicode",
+    label: "HuneyBee (Unicode)",
+    familyName: "HuneyBee unicode",
+    outputFontClass: "deseret-font-huneybee-unicode",
+    downloadPath: "deseret/unicode added/Huneybee-unicode-added.ttf",
+    downloadName: "Huneybee-unicode-added.ttf",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
+  },
+  {
+    id: "bee-skep-unicode",
+    label: "Bee Skep Serif (Unicode)",
+    familyName: "Bee Skep Serif unicode",
+    outputFontClass: "deseret-font-bee-skep-unicode",
+    downloadPath: "deseret/unicode added/beeskeps-unicode-added.otf",
+    downloadName: "beeskeps-unicode-added.otf",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
+  },
+  {
+    id: "deseret-legacy-unicode",
+    label: "Deseret (Bateman, Unicode)",
+    familyName: "Deseret Bateman unicode",
+    outputFontClass: "deseret-font-legacy-unicode",
+    downloadPath: "deseret/unicode added/DESERET-unicode-added.TTF",
+    downloadName: "DESERET-unicode-added.TTF",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
+  },
+  {
+    id: "deseret-legacy-alt-unicode",
+    label: "Deseret (Thibault/Kass, Unicode)",
+    familyName: "Deseret Thibault unicode",
+    outputFontClass: "deseret-font-legacy-alt-unicode",
+    downloadPath: "deseret/unicode added/Deseret-unicode-added.ttf",
+    downloadName: "Deseret-unicode-added.ttf",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
+  },
+  {
+    id: "deseret-legacy-underscore-unicode",
+    label: "Deseret (1991, Unicode)",
+    familyName: "Deseret Kearney unicode",
+    outputFontClass: "deseret-font-legacy-underscore-unicode",
+    downloadPath: "deseret/unicode added/Deseret_-unicode-added.ttf",
+    downloadName: "Deseret_-unicode-added.ttf",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
+  },
+  {
+    id: "deseret-bee-legacy-unicode",
+    label: "DeseretBee (legacy, Unicode)",
+    familyName: "DeseretBee unicode",
+    outputFontClass: "deseret-font-deseret-bee-legacy-unicode",
+    downloadPath: "deseret/unicode added/_DeseretBee-unicode-added.ttf",
+    downloadName: "DeseretBee-unicode-added.ttf",
+    supportsUnicode: true,
+    license: "Free",
+    category: "unicode",
   },
 ];
 

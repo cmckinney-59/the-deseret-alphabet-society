@@ -1,6 +1,7 @@
 import { ALPHABETS_DATA } from "./ALPHABETS_DATA";
 import { getAurebeshFontTableFaces } from "./AurebeshData/AUREBESH_FONTS_DATA";
 import { BAYBAYIN_FONTS } from "./BaybayinData/BAYBAYIN_FONTS_DATA";
+import { DESERET_LETTERS } from "./DeseretData/DESERET_DATA";
 import { DESERET_FONTS } from "./DeseretData/DESERET_FONTS_DATA";
 import { deseretUnicodeToLatin } from "./DeseretData/deseretLatinMap";
 
@@ -16,6 +17,11 @@ export type FontTableRow = {
   license: string;
   creator?: string;
   sourceUrl?: string;
+  /**
+   * Optional table grouping. Unicode-remapped legacy faces are shown in a
+   * separate section with a short disclosure.
+   */
+  section?: "unicode-remapped";
 };
 
 const FONT_ASSETS = import.meta.glob(
@@ -118,7 +124,9 @@ export function getFontTableRows(alphabetName: string): FontTableRow[] {
   }
 
   if (alphabetName === "Deseret") {
-    const unicodeSample = "𐐔𐐯𐑅𐐲𐑉𐐯𐐻";
+    const unicodeSample = Object.values(DESERET_LETTERS)
+      .map((letter) => letter.upper)
+      .join("");
     return DESERET_FONTS.map((font) => ({
       id: font.id,
       name: font.label,
@@ -132,6 +140,9 @@ export function getFontTableRows(alphabetName: string): FontTableRow[] {
       license: font.license,
       creator: font.creator,
       sourceUrl: font.sourceUrl,
+      ...(font.downloadPath.includes("unicode added/")
+        ? { section: "unicode-remapped" as const }
+        : {}),
     }));
   }
 

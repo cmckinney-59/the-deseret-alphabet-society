@@ -1,6 +1,7 @@
 import PageTitle from "../../components/PageTitle/PageTitle";
 import DeseretDocuments from "../../components/HowToRead/Deseret/DeseretDocuments";
 import DeseretMoreResources from "../../components/HowToRead/Deseret/DeseretMoreResources";
+import FontsSection from "../../components/HowToRead/FontsSection";
 import CollapsibleSection from "../../components/CollapsibleSection/CollapsibleSection";
 import ProjectTiles from "../ProjectsPage/ProjectTiles";
 import { PROJECTS_DATA as DESERET_PROJECTS_DATA } from "../../data/DeseretData/DESERET_PROJECTS_DATA";
@@ -13,6 +14,7 @@ export default function ResourcesPage() {
       <PageTitle title="Resources" />
 
       <DeseretDocuments />
+      <FontsSection />
       <DeseretMoreResources />
 
       <CollapsibleSection title="ScriptWorks Projects" defaultExpanded={true}>
